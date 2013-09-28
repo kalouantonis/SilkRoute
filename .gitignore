@@ -1,3 +1,4 @@
 Data/
 data.sqlite
 build-*
+Tools/build-*
