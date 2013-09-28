@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Grab first argument, run valgrind
+valgrind --tool=callgrind -v --dump-every-bb=10000000 --dump-instr=yes --collect-jumps=yes $1

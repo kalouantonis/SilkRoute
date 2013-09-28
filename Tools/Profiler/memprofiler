@@ -1,0 +1,3 @@
+#!/bin/bash
+
+valgrind --leak-check=full --track-origins=yes --xml=yes --xml-file=valgrindout.xml $1

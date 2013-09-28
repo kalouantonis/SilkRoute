@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>678</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Silk Route Accounting</string>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QMdiArea" name="mdiArea"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionPrint"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuSuppliers">
+    <property name="title">
+     <string>Suppliers</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionAdd_Suppliers"/>
+    <addaction name="actionView_Suppliers"/>
+    <addaction name="actionSearch_Suppliers"/>
+   </widget>
+   <widget class="QMenu" name="menuStock">
+    <property name="title">
+     <string>Stock</string>
+    </property>
+    <addaction name="actionAdd_Stock_Item"/>
+    <addaction name="actionAdd_Stock_Type"/>
+    <addaction name="separator"/>
+    <addaction name="actionView_Stock"/>
+    <addaction name="actionSearch_Stock"/>
+   </widget>
+   <widget class="QMenu" name="menuTransactions">
+    <property name="title">
+     <string>Transactions</string>
+    </property>
+    <addaction name="actionAdd_Transactions"/>
+    <addaction name="actionView_Transactions"/>
+    <addaction name="actionSearch_Transactions"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="actionPreferences"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionFullscreen"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionAbout_SLA"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout_Qt"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuSuppliers"/>
+   <addaction name="menuStock"/>
+   <addaction name="menuTransactions"/>
+   <addaction name="menuView"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuAbout"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="statusTip">
+    <string>Ready...</string>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="toolBar_Acts">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QDockWidget" name="groupDock">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="windowTitle">
+    <string>Tasks</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="groupDockV">
+    <layout class="QVBoxLayout" name="verticalLayout_7">
+     <item>
+      <widget class="QScrollArea" name="groupScroll">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>135</width>
+          <height>580</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QGroupBox" name="groupTransactions">
+           <property name="title">
+            <string>Transactions</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>12</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="btnTransAdd">
+              <property name="text">
+               <string>Add...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="imageres.qrc">
+                <normaloff>:/general/resources/images/add.png</normaloff>:/general/resources/images/add.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnTransView">
+              <property name="text">
+               <string>View</string>
+              </property>
+              <property name="icon">
+               <iconset resource="imageres.qrc">
+                <normaloff>:/transactions/resources/images/transactions-view.png</normaloff>:/transactions/resources/images/transactions-view.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnTransSearch">
+              <property name="text">
+               <string>Search...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="imageres.qrc">
+                <normaloff>:/general/resources/images/search.png</normaloff>:/general/resources/images/search.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupStock">
+           <property name="title">
+            <string>Stock</string>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>12</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="btnStockItemAdd">
+              <property name="text">
+               <string>Add Item...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="imageres.qrc">
+                <normaloff>:/general/resources/images/add.png</normaloff>:/general/resources/images/add.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnStockTypeAdd">
+              <property name="text">
+               <string>Add Type...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="imageres.qrc">
+                <normaloff>:/general/resources/images/add2.png</normaloff>:/general/resources/images/add2.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnStockView">
+              <property name="text">
+               <string>View</string>
+              </property>
+              <property name="icon">
+               <iconset resource="imageres.qrc">
+                <normaloff>:/stock/resources/images/stock-view.png</normaloff>:/stock/resources/images/stock-view.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnStockSearch">
+              <property name="text">
+               <string>Search...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="imageres.qrc">
+                <normaloff>:/general/resources/images/search.png</normaloff>:/general/resources/images/search.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupSuppliers">
+           <property name="title">
+            <string>Suppliers</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>12</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="btnSupAdd">
+              <property name="text">
+               <string>Add...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="imageres.qrc">
+                <normaloff>:/general/resources/images/add.png</normaloff>:/general/resources/images/add.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnSupView">
+              <property name="text">
+               <string>View</string>
+              </property>
+              <property name="icon">
+               <iconset resource="imageres.qrc">
+                <normaloff>:/suppliers/resources/images/supplier-add.png</normaloff>:/suppliers/resources/images/supplier-add.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnSupSearch">
+              <property name="text">
+               <string>Search...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="imageres.qrc">
+                <normaloff>:/general/resources/images/search.png</normaloff>:/general/resources/images/search.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupAdmin">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="toolTip">
+            <string>Box for administrator tools</string>
+           </property>
+           <property name="title">
+            <string>Administrator</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QPushButton" name="pushButton">
+              <property name="text">
+               <string>Users</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_2">
+              <property name="text">
+               <string>Stuff</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="text">
+    <string>Print...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionAdd_Suppliers">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/mainicons/resources/images/supplier-add.png</normaloff>:/mainicons/resources/images/supplier-add.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add...</string>
+   </property>
+   <property name="toolTip">
+    <string>Add Supplier</string>
+   </property>
+  </action>
+  <action name="actionView_Suppliers">
+   <property name="icon">
+    <iconset resource="imageres.qrc">
+     <normaloff>:/suppliers/resources/images/supplier-view.png</normaloff>
+     <normalon>:/mainicons/resources/images/supplier-view.png</normalon>:/suppliers/resources/images/supplier-view.png</iconset>
+   </property>
+   <property name="text">
+    <string>View</string>
+   </property>
+   <property name="toolTip">
+    <string>View Suppliers</string>
+   </property>
+  </action>
+  <action name="actionAdd_Stock_Item">
+   <property name="icon">
+    <iconset resource="imageres.qrc">
+     <normaloff>:/stock/resources/images/stock-add.png</normaloff>:/stock/resources/images/stock-add.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Stock Item...</string>
+   </property>
+  </action>
+  <action name="actionView_Stock">
+   <property name="icon">
+    <iconset resource="imageres.qrc">
+     <normaloff>:/stock/resources/images/stock-view.png</normaloff>:/stock/resources/images/stock-view.png</iconset>
+   </property>
+   <property name="text">
+    <string>View</string>
+   </property>
+   <property name="toolTip">
+    <string>View Stock Items</string>
+   </property>
+  </action>
+  <action name="actionAdd_Transactions">
+   <property name="text">
+    <string>Add..</string>
+   </property>
+  </action>
+  <action name="actionView_Transactions">
+   <property name="icon">
+    <iconset resource="imageres.qrc">
+     <normaloff>:/transactions/resources/images/transactions-view.png</normaloff>:/transactions/resources/images/transactions-view.png</iconset>
+   </property>
+   <property name="text">
+    <string>View</string>
+   </property>
+   <property name="toolTip">
+    <string>View Transactions</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="icon">
+    <iconset resource="imageres.qrc">
+     <normaloff>:/general/resources/images/preferences.png</normaloff>:/general/resources/images/preferences.png</iconset>
+   </property>
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+  </action>
+  <action name="actionFullscreen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fullscreen</string>
+   </property>
+   <property name="shortcut">
+    <string>F11</string>
+   </property>
+  </action>
+  <action name="actionSearch_Suppliers">
+   <property name="text">
+    <string>Search...</string>
+   </property>
+  </action>
+  <action name="actionSearch_Stock">
+   <property name="icon">
+    <iconset resource="imageres.qrc">
+     <normaloff>:/stock/resources/images/stock-search.png</normaloff>:/stock/resources/images/stock-search.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search...</string>
+   </property>
+   <property name="toolTip">
+    <string>Search Stock</string>
+   </property>
+  </action>
+  <action name="actionSearch_Transactions">
+   <property name="text">
+    <string>Search...</string>
+   </property>
+   <property name="toolTip">
+    <string>Search Transactions</string>
+   </property>
+  </action>
+  <action name="actionAdd_Stock_Type">
+   <property name="text">
+    <string>Add Stock Type..</string>
+   </property>
+  </action>
+  <action name="actionAbout_SLA">
+   <property name="text">
+    <string>About SLA...</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About Qt</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>btnTransAdd</tabstop>
+  <tabstop>btnTransView</tabstop>
+  <tabstop>btnTransSearch</tabstop>
+  <tabstop>btnStockItemAdd</tabstop>
+  <tabstop>btnStockTypeAdd</tabstop>
+  <tabstop>btnStockView</tabstop>
+  <tabstop>btnStockSearch</tabstop>
+  <tabstop>btnSupAdd</tabstop>
+  <tabstop>btnSupView</tabstop>
+  <tabstop>btnSupSearch</tabstop>
+  <tabstop>groupScroll</tabstop>
+ </tabstops>
+ <resources>
+  <include location="imageres.qrc"/>
+ </resources>
+ <connections/>
+</ui>
