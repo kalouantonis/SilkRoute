@@ -36,13 +36,6 @@ private slots:
     void m_createTransactionView() {}
     void m_createStockView();
 
-    // Search actions ================================
-    // Will create dialog and disconnect action. This is so that
-    // not all views are initialized at startup, speeding up
-    // startup time
-    void m_searchSupplierAction();
-
-    // Create preferences dialog
     void m_showPreferences();
 
 private:

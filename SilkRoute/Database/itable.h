@@ -6,6 +6,9 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
+#include <QRegExp>
+#include <QRegExpValidator>
+
 namespace DB
 {
     class ITable : public QObject
@@ -17,12 +20,8 @@ namespace DB
 
         const QString GetLastError();
 
-        // Checks if query is sanitized, stopping (MOST) SQL Injections
-        static QString SanitizeQuery(const QString& str);
-
-    signals:
-
-    public slots:
+        // Returns alphanumberic regex expression for use as a validator
+        static QRegExpValidator* GetAlNumValidator(QObject* parent = 0);
 
     protected:
         // Clear SQL Query class

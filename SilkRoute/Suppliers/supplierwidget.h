@@ -4,6 +4,9 @@
 #include <QWidget>
 #include <QSqlQueryModel>
 
+// For table actions
+#include <QModelIndex>
+
 namespace Ui {
 class SupplierWidget;
 }
@@ -16,9 +19,10 @@ public:
     explicit SupplierWidget(QWidget *parent = 0);
     ~SupplierWidget();
 
-public slots:
-    void searchAction();
-    
+private slots:
+    void m_searchAction();
+    void m_editAction(const QModelIndex& index);
+
 private:
     Ui::SupplierWidget *ui;
 

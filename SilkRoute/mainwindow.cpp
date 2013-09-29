@@ -51,8 +51,6 @@ void MainWindow::m_createActions()
     this->connect(ui->btnStockView, SIGNAL(clicked()), this,
                   SLOT(m_createStockView()));
 
-    // Search
-    this->connect(ui->btnSupSearch, SIGNAL(clicked()), this, SLOT(m_searchSupplierAction()));
 }
 
 void MainWindow::m_initToolbar()
@@ -87,8 +85,6 @@ void MainWindow::m_createWidget(const WidgetIDS id, QWidget **widget)
         {
         case SUPPLIER:
             (*widget) = new SupplierWidget(this);
-            (*widget)->connect(ui->btnSupSearch, SIGNAL(clicked()),
-                               (*widget), SLOT(searchAction()));
             break;
         case TRANSACTION:
             break;
@@ -122,20 +118,6 @@ void MainWindow::m_createSupplierView()
 {
     // Create the supplier widget
     m_createWidget(SUPPLIER, (QWidget**)&m_supplierWidget);
-}
-
-void MainWindow::m_searchSupplierAction()
-{
-    if(!m_supplierWidget)
-    {
-        m_createSupplierView();
-
-        // Emit a click action
-        emit ui->btnSupSearch->click();
-    }
-
-    // Disconnect this action, do not call again
-    disconnect(ui->btnSupSearch, SIGNAL(clicked()), this, SLOT(m_searchSupplierAction()));
 }
 
 void MainWindow::m_createStockView()

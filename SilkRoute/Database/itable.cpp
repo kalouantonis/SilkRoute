@@ -22,22 +22,10 @@ namespace DB
         m_qry.clear();
     }
 
-    QString ITable::SanitizeQuery(const QString &str)
+    QRegExpValidator* ITable::GetAlNumValidator(QObject* parent)
     {
         //QRegExp re("[A-Za-z0-9]", Qt::CaseInsensitive);
-        QRegExp re("[:alnum:]");
-
-        // Escape string, making sure it only has the attributes
-        // provided by regex
-        //return re.escape(str);
-        QString val = re.escape(str);
-
-#ifdef _DEBUG
-        qDebug() << "Escaped chars: " + QString::number(re.numCaptures()) +
-                    '\n\t' + re.errorString();
-#endif
-
-        return val;
+        return new QRegExpValidator(QRegExp("[A-Za-z0-9]"), parent);
     }
 
     ITable::~ITable()

@@ -327,18 +327,6 @@
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QPushButton" name="btnSupSearch">
-              <property name="text">
-               <string>Search...</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/general/resources/images/search.png</normaloff>
-                <normalon>:/general/Resources/images/search.png</normalon>:/general/resources/images/search.png</iconset>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
          </item>
@@ -546,7 +534,6 @@
   <tabstop>btnStockSearch</tabstop>
   <tabstop>btnSupAdd</tabstop>
   <tabstop>btnSupView</tabstop>
-  <tabstop>btnSupSearch</tabstop>
   <tabstop>groupScroll</tabstop>
  </tabstops>
  <resources>
