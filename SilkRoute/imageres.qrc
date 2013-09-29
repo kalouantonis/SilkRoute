@@ -1,22 +1,22 @@
 <RCC>
     <qresource prefix="/suppliers">
-        <file>resources/images/supplier-add.png</file>
-        <file>resources/images/supplier-view.png</file>
+        <file>Resources/images/supplier-add.png</file>
+        <file>Resources/images/supplier-view.png</file>
     </qresource>
     <qresource prefix="/general">
-        <file>resources/images/doc-save.png</file>
-        <file>resources/images/doc-saveall.png</file>
-        <file>resources/images/preferences.png</file>
-        <file>resources/images/add.png</file>
-        <file>resources/images/add2.png</file>
-        <file>resources/images/search.png</file>
+        <file>Resources/images/doc-save.png</file>
+        <file>Resources/images/doc-saveall.png</file>
+        <file>Resources/images/preferences.png</file>
+        <file>Resources/images/add.png</file>
+        <file>Resources/images/add2.png</file>
+        <file>Resources/images/search.png</file>
     </qresource>
     <qresource prefix="/stock">
-        <file>resources/images/stock-add.png</file>
-        <file>resources/images/stock-view.png</file>
-        <file>resources/images/stock-search.png</file>
+        <file>Resources/images/stock-add.png</file>
+        <file>Resources/images/stock-view.png</file>
+        <file>Resources/images/stock-search.png</file>
     </qresource>
     <qresource prefix="/transactions">
-        <file>resources/images/transactions-view.png</file>
+        <file>Resources/images/transactions-view.png</file>
     </qresource>
 </RCC>

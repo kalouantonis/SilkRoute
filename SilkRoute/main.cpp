@@ -1,8 +1,8 @@
 #include "mainwindow.h"
-#include "logindialog.h"
-#include "dbconnector.h"
+#include "Users/logindialog.h"
+#include "Database/dbconnector.h"
 
-#include "dbutils.h"
+#include "Database/dbutils.h"
 
 #include <QApplication>
 

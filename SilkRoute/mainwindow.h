@@ -8,8 +8,9 @@
 #include <QMessageBox>
 
 // My includes
-#include "preferencesdialog.h"
-#include "supplierwidget.h"
+#include <SilkRoute/preferencesdialog.h>
+#include <SilkRoute/Suppliers/supplierwidget.h>
+#include <SilkRoute/Stock/stockwidget.h>
 
 namespace Ui {
 class MainWindow;
@@ -24,9 +25,6 @@ public:
     ~MainWindow();
     
 private slots:
-    // Called when action performs exit
-    void OnExit();
-
     // Called when fullscreen is toggled
     void OnFullscreenAction(bool checked);
 
@@ -36,7 +34,13 @@ private slots:
     // view actions ====================================
     void m_createSupplierView();
     void m_createTransactionView() {}
-    void m_createStockView() {}
+    void m_createStockView();
+
+    // Search actions ================================
+    // Will create dialog and disconnect action. This is so that
+    // not all views are initialized at startup, speeding up
+    // startup time
+    void m_searchSupplierAction();
 
     // Create preferences dialog
     void m_showPreferences();
@@ -59,6 +63,7 @@ private:
 
     // Widgets that may need to be activated
     SupplierWidget* m_supplierWidget;
+    StockWidget* m_stockWidget;
 
     // used when creating widget
     enum WidgetIDS

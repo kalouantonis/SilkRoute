@@ -1,7 +1,7 @@
 #ifndef USERTABLE_H
 #define USERTABLE_H
 
-#include "itable.h"
+#include <SilkRoute/Database/itable.h>
 
 // For encryption
 #include <QCryptographicHash>

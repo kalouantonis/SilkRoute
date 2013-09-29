@@ -8,7 +8,7 @@
 // For messaging
 #include <QMessageBox>
 
-#include "usertable.h"
+#include <SilkRoute/Users/usertable.h>
 
 namespace Ui {
 class LoginDialog;

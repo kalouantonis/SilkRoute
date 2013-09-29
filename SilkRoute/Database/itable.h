@@ -17,6 +17,9 @@ namespace DB
 
         const QString GetLastError();
 
+        // Checks if query is sanitized, stopping (MOST) SQL Injections
+        static QString SanitizeQuery(const QString& str);
+
     signals:
 
     public slots:

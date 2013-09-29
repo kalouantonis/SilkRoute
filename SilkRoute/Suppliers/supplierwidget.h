@@ -2,6 +2,7 @@
 #define SUPPLIERWIDGET_H
 
 #include <QWidget>
+#include <QSqlQueryModel>
 
 namespace Ui {
 class SupplierWidget;
@@ -14,6 +15,9 @@ class SupplierWidget : public QWidget
 public:
     explicit SupplierWidget(QWidget *parent = 0);
     ~SupplierWidget();
+
+public slots:
+    void searchAction();
     
 private:
     Ui::SupplierWidget *ui;
@@ -28,6 +32,9 @@ private:
         EXPENDITURE,
         LAST_TRANSACTION
     };
+
+    // Model for data grabbing from SQL
+    QSqlQueryModel m_supplierModel;
 };
 
 #endif // SUPPLIERWIDGET_H

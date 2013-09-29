@@ -192,8 +192,9 @@
                <string>Add...</string>
               </property>
               <property name="icon">
-               <iconset resource="imageres.qrc">
-                <normaloff>:/general/resources/images/add.png</normaloff>:/general/resources/images/add.png</iconset>
+               <iconset>
+                <normaloff>:/general/resources/images/add.png</normaloff>
+                <normalon>:/general/Resources/images/add.png</normalon>:/general/resources/images/add.png</iconset>
               </property>
              </widget>
             </item>
@@ -203,8 +204,9 @@
                <string>View</string>
               </property>
               <property name="icon">
-               <iconset resource="imageres.qrc">
-                <normaloff>:/transactions/resources/images/transactions-view.png</normaloff>:/transactions/resources/images/transactions-view.png</iconset>
+               <iconset>
+                <normaloff>:/transactions/resources/images/transactions-view.png</normaloff>
+                <normalon>:/transactions/Resources/images/transactions-view.png</normalon>:/transactions/resources/images/transactions-view.png</iconset>
               </property>
              </widget>
             </item>
@@ -214,8 +216,9 @@
                <string>Search...</string>
               </property>
               <property name="icon">
-               <iconset resource="imageres.qrc">
-                <normaloff>:/general/resources/images/search.png</normaloff>:/general/resources/images/search.png</iconset>
+               <iconset>
+                <normaloff>:/general/resources/images/search.png</normaloff>
+                <normalon>:/general/Resources/images/search.png</normalon>:/general/resources/images/search.png</iconset>
               </property>
              </widget>
             </item>
@@ -243,8 +246,9 @@
                <string>Add Item...</string>
               </property>
               <property name="icon">
-               <iconset resource="imageres.qrc">
-                <normaloff>:/general/resources/images/add.png</normaloff>:/general/resources/images/add.png</iconset>
+               <iconset>
+                <normaloff>:/general/resources/images/add.png</normaloff>
+                <normalon>:/general/Resources/images/add.png</normalon>:/general/resources/images/add.png</iconset>
               </property>
              </widget>
             </item>
@@ -254,8 +258,9 @@
                <string>Add Type...</string>
               </property>
               <property name="icon">
-               <iconset resource="imageres.qrc">
-                <normaloff>:/general/resources/images/add2.png</normaloff>:/general/resources/images/add2.png</iconset>
+               <iconset>
+                <normaloff>:/general/resources/images/add2.png</normaloff>
+                <normalon>:/general/Resources/images/add2.png</normalon>:/general/resources/images/add2.png</iconset>
               </property>
              </widget>
             </item>
@@ -265,8 +270,9 @@
                <string>View</string>
               </property>
               <property name="icon">
-               <iconset resource="imageres.qrc">
-                <normaloff>:/stock/resources/images/stock-view.png</normaloff>:/stock/resources/images/stock-view.png</iconset>
+               <iconset>
+                <normaloff>:/stock/resources/images/stock-view.png</normaloff>
+                <normalon>:/stock/Resources/images/stock-view.png</normalon>:/stock/resources/images/stock-view.png</iconset>
               </property>
              </widget>
             </item>
@@ -276,8 +282,9 @@
                <string>Search...</string>
               </property>
               <property name="icon">
-               <iconset resource="imageres.qrc">
-                <normaloff>:/general/resources/images/search.png</normaloff>:/general/resources/images/search.png</iconset>
+               <iconset>
+                <normaloff>:/general/resources/images/search.png</normaloff>
+                <normalon>:/general/Resources/images/search.png</normalon>:/general/resources/images/search.png</iconset>
               </property>
              </widget>
             </item>
@@ -302,8 +309,9 @@
                <string>Add...</string>
               </property>
               <property name="icon">
-               <iconset resource="imageres.qrc">
-                <normaloff>:/general/resources/images/add.png</normaloff>:/general/resources/images/add.png</iconset>
+               <iconset>
+                <normaloff>:/general/resources/images/add.png</normaloff>
+                <normalon>:/general/Resources/images/add.png</normalon>:/general/resources/images/add.png</iconset>
               </property>
              </widget>
             </item>
@@ -313,8 +321,9 @@
                <string>View</string>
               </property>
               <property name="icon">
-               <iconset resource="imageres.qrc">
-                <normaloff>:/suppliers/resources/images/supplier-add.png</normaloff>:/suppliers/resources/images/supplier-add.png</iconset>
+               <iconset>
+                <normaloff>:/suppliers/resources/images/supplier-add.png</normaloff>
+                <normalon>:/suppliers/Resources/images/supplier-view.png</normalon>:/suppliers/resources/images/supplier-add.png</iconset>
               </property>
              </widget>
             </item>
@@ -324,8 +333,9 @@
                <string>Search...</string>
               </property>
               <property name="icon">
-               <iconset resource="imageres.qrc">
-                <normaloff>:/general/resources/images/search.png</normaloff>:/general/resources/images/search.png</iconset>
+               <iconset>
+                <normaloff>:/general/resources/images/search.png</normaloff>
+                <normalon>:/general/Resources/images/search.png</normalon>:/general/resources/images/search.png</iconset>
               </property>
              </widget>
             </item>
@@ -383,8 +393,8 @@
   </action>
   <action name="actionAdd_Suppliers">
    <property name="icon">
-    <iconset>
-     <normaloff>:/mainicons/resources/images/supplier-add.png</normaloff>:/mainicons/resources/images/supplier-add.png</iconset>
+    <iconset resource="imageres.qrc">
+     <normaloff>:/general/Resources/images/add.png</normaloff>:/general/Resources/images/add.png</iconset>
    </property>
    <property name="text">
     <string>Add...</string>
@@ -396,8 +406,8 @@
   <action name="actionView_Suppliers">
    <property name="icon">
     <iconset resource="imageres.qrc">
-     <normaloff>:/suppliers/resources/images/supplier-view.png</normaloff>
-     <normalon>:/mainicons/resources/images/supplier-view.png</normalon>:/suppliers/resources/images/supplier-view.png</iconset>
+     <normaloff>:/suppliers/Resources/images/supplier-add.png</normaloff>
+     <normalon>:/mainicons/resources/images/supplier-view.png</normalon>:/suppliers/Resources/images/supplier-add.png</iconset>
    </property>
    <property name="text">
     <string>View</string>
@@ -409,7 +419,7 @@
   <action name="actionAdd_Stock_Item">
    <property name="icon">
     <iconset resource="imageres.qrc">
-     <normaloff>:/stock/resources/images/stock-add.png</normaloff>:/stock/resources/images/stock-add.png</iconset>
+     <normaloff>:/general/Resources/images/add.png</normaloff>:/general/Resources/images/add.png</iconset>
    </property>
    <property name="text">
     <string>Add Stock Item...</string>
@@ -418,7 +428,7 @@
   <action name="actionView_Stock">
    <property name="icon">
     <iconset resource="imageres.qrc">
-     <normaloff>:/stock/resources/images/stock-view.png</normaloff>:/stock/resources/images/stock-view.png</iconset>
+     <normaloff>:/stock/Resources/images/stock-view.png</normaloff>:/stock/Resources/images/stock-view.png</iconset>
    </property>
    <property name="text">
     <string>View</string>
@@ -428,14 +438,20 @@
    </property>
   </action>
   <action name="actionAdd_Transactions">
+   <property name="icon">
+    <iconset>
+     <normalon>:/general/Resources/images/add.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Add..</string>
    </property>
   </action>
   <action name="actionView_Transactions">
    <property name="icon">
-    <iconset resource="imageres.qrc">
-     <normaloff>:/transactions/resources/images/transactions-view.png</normaloff>:/transactions/resources/images/transactions-view.png</iconset>
+    <iconset>
+     <normaloff>:/transactions/resources/images/transactions-view.png</normaloff>
+     <normalon>:/transactions/Resources/images/transactions-view.png</normalon>:/transactions/resources/images/transactions-view.png</iconset>
    </property>
    <property name="text">
     <string>View</string>
@@ -446,8 +462,9 @@
   </action>
   <action name="actionPreferences">
    <property name="icon">
-    <iconset resource="imageres.qrc">
-     <normaloff>:/general/resources/images/preferences.png</normaloff>:/general/resources/images/preferences.png</iconset>
+    <iconset>
+     <normaloff>:/general/resources/images/preferences.png</normaloff>
+     <normalon>:/general/Resources/images/preferences.png</normalon>:/general/resources/images/preferences.png</iconset>
    </property>
    <property name="text">
     <string>Preferences</string>
@@ -465,14 +482,19 @@
    </property>
   </action>
   <action name="actionSearch_Suppliers">
+   <property name="icon">
+    <iconset resource="imageres.qrc">
+     <normaloff>:/general/Resources/images/search.png</normaloff>:/general/Resources/images/search.png</iconset>
+   </property>
    <property name="text">
     <string>Search...</string>
    </property>
   </action>
   <action name="actionSearch_Stock">
    <property name="icon">
-    <iconset resource="imageres.qrc">
-     <normaloff>:/stock/resources/images/stock-search.png</normaloff>:/stock/resources/images/stock-search.png</iconset>
+    <iconset>
+     <normaloff>:/stock/resources/images/stock-search.png</normaloff>
+     <normalon>:/general/Resources/images/search.png</normalon>:/stock/resources/images/stock-search.png</iconset>
    </property>
    <property name="text">
     <string>Search...</string>
@@ -482,6 +504,10 @@
    </property>
   </action>
   <action name="actionSearch_Transactions">
+   <property name="icon">
+    <iconset resource="imageres.qrc">
+     <normaloff>:/general/Resources/images/search.png</normaloff>:/general/Resources/images/search.png</iconset>
+   </property>
    <property name="text">
     <string>Search...</string>
    </property>
@@ -490,6 +516,10 @@
    </property>
   </action>
   <action name="actionAdd_Stock_Type">
+   <property name="icon">
+    <iconset resource="imageres.qrc">
+     <normaloff>:/general/Resources/images/add2.png</normaloff>:/general/Resources/images/add2.png</iconset>
+   </property>
    <property name="text">
     <string>Add Stock Type..</string>
    </property>

@@ -8,7 +8,8 @@
 MainWindow::MainWindow(QWidget *parent, bool admin) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    m_supplierWidget(NULL)
+    m_supplierWidget(NULL),
+    m_stockWidget(NULL)
 {
     ui->setupUi(this);
 
@@ -24,7 +25,9 @@ MainWindow::MainWindow(QWidget *parent, bool admin) :
 void MainWindow::m_createActions()
 {
     // Link actions to events
-    this->connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(OnExit()));
+
+    // Link to default close action
+    this->connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
 
     // Link fullscreen check
     this->connect(ui->actionFullscreen, SIGNAL(triggered(bool)), this, SLOT(OnFullscreenAction(bool)));
@@ -41,10 +44,15 @@ void MainWindow::m_createActions()
     this->connect(ui->actionView_Transactions, SIGNAL(triggered()), this,
                   SLOT(m_createTransactionView()));
 
-
-    // COnnect side bar buttons
+    // COnnect side bar buttons =========================================================
+    // Views
     this->connect(ui->btnSupView, SIGNAL(clicked()), this,
                   SLOT(m_createSupplierView()));
+    this->connect(ui->btnStockView, SIGNAL(clicked()), this,
+                  SLOT(m_createStockView()));
+
+    // Search
+    this->connect(ui->btnSupSearch, SIGNAL(clicked()), this, SLOT(m_searchSupplierAction()));
 }
 
 void MainWindow::m_initToolbar()
@@ -68,19 +76,29 @@ void MainWindow::m_showPreferences()
 
 void MainWindow::m_createWidget(const WidgetIDS id, QWidget **widget)
 {
-
     if(!(*widget))
     {
+#ifdef _DEBUG
+        qDebug() << "Creating widget";
+#endif
+
         // Find ID and create appropriate widget
         switch(id)
         {
         case SUPPLIER:
             (*widget) = new SupplierWidget(this);
+            (*widget)->connect(ui->btnSupSearch, SIGNAL(clicked()),
+                               (*widget), SLOT(searchAction()));
             break;
         case TRANSACTION:
             break;
         case STOCK:
+            (*widget) = new StockWidget(this);
             break;
+        default:
+            // Create empty widget so as to avoid segfaults through
+            // NULL pointer dereferencing
+            (*widget) = new QWidget(this);
         }
         // Subscribe sub-window
         ui->mdiArea->addSubWindow(*widget);
@@ -88,22 +106,41 @@ void MainWindow::m_createWidget(const WidgetIDS id, QWidget **widget)
         // Show window maximized
         (*widget)->showMaximized();
     }
-    else if(!(*widget)->isActiveWindow())
+    else if(!(*widget)->isTopLevel())
     {
+#ifdef _DEBUG
+        qDebug() << "Widget already exists but not active, setting as active";
+#endif
+
         // If not active, but exists, set as active
-        ui->mdiArea->setActiveSubWindow((QMdiSubWindow*)(*widget));
+        (*widget)->setFocus();
     }
 
 }
 
 void MainWindow::m_createSupplierView()
 {
-#ifdef _DEBUG
-    qDebug() << "Creating supplier view";
-#endif
-
     // Create the supplier widget
     m_createWidget(SUPPLIER, (QWidget**)&m_supplierWidget);
+}
+
+void MainWindow::m_searchSupplierAction()
+{
+    if(!m_supplierWidget)
+    {
+        m_createSupplierView();
+
+        // Emit a click action
+        emit ui->btnSupSearch->click();
+    }
+
+    // Disconnect this action, do not call again
+    disconnect(ui->btnSupSearch, SIGNAL(clicked()), this, SLOT(m_searchSupplierAction()));
+}
+
+void MainWindow::m_createStockView()
+{
+    m_createWidget(STOCK, (QWidget**)&m_stockWidget);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -134,11 +171,6 @@ void MainWindow::OnFullscreenAction(bool checked)
         this->showNormal();
     else
         this->showFullScreen();
-}
-
-void MainWindow::OnExit()
-{
-    this->close();
 }
 
 MainWindow::~MainWindow()
