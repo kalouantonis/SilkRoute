@@ -51,6 +51,9 @@ void MainWindow::m_createActions()
     this->connect(ui->btnStockView, SIGNAL(clicked()), this,
                   SLOT(m_createStockView()));
 
+    // Add
+    this->connect(ui->btnSupAdd, SIGNAL(clicked()), this, SLOT(m_addSupplierAction()));
+
 }
 
 void MainWindow::m_initToolbar()
@@ -118,6 +121,15 @@ void MainWindow::m_createSupplierView()
 {
     // Create the supplier widget
     m_createWidget(SUPPLIER, (QWidget**)&m_supplierWidget);
+}
+
+void MainWindow::m_addSupplierAction()
+{
+    // if window is not created, do it, if it is, set to active
+    m_createWidget(SUPPLIER, (QWidget**)&m_supplierWidget);
+
+    // Call signal, the widget handles the rest
+    //emit m_supplierWidget->addSupplierAction();
 }
 
 void MainWindow::m_createStockView()

@@ -36,7 +36,11 @@ private slots:
     void m_createTransactionView() {}
     void m_createStockView();
 
+    // Add actions
+    void m_addSupplierAction();
+
     void m_showPreferences();
+
 
 private:
     // Called when any event invokes a close,

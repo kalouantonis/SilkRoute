@@ -23,27 +23,18 @@
 
 SupplierWidget::SupplierWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::SupplierWidget),
-    m_supplierModel()
+    ui(new Ui::SupplierWidget)
 {
     ui->setupUi(this);
 
-    // Default load up query
-    m_supplierModel.setQuery("SELECT * FROM suppliers");
-
-    // Set header data
-    m_supplierModel.setHeaderData(ID, Qt::Horizontal, QObject::tr("Ref"));
-    m_supplierModel.setHeaderData(NAME, Qt::Horizontal, QObject::tr("Name"));
-    m_supplierModel.setHeaderData(PROFIT, Qt::Horizontal, QObject::tr("Profit"));
-    m_supplierModel.setHeaderData(EXPENDITURE, Qt::Horizontal, QObject::tr("Expenditure"));
-    // Allow clicking to open transaction window
-    m_supplierModel.setHeaderData(LAST_TRANSACTION, Qt::Horizontal, QObject::tr("Last Transaction"));
+    // Set up model
+    m_supplierModel = new SupplierTable(this);
 
     // Set model delegate
-    ui->tableView->setModel(&m_supplierModel);
+    ui->tableView->setModel(m_supplierModel);
 
     // Resize transaction header so as to look nice
-    ui->tableView->setColumnWidth(LAST_TRANSACTION, ui->tableView->columnWidth(LAST_TRANSACTION) + 10);
+    ui->tableView->setColumnWidth(SupplierTable::LAST_TRANSACTION, ui->tableView->columnWidth(SupplierTable::LAST_TRANSACTION) + 10);
 
     // Set search validator, so as to avoid SQL Injections
     ui->txtSearch->setValidator(DB::ITable::GetAlNumValidator(this));
@@ -56,6 +47,9 @@ SupplierWidget::SupplierWidget(QWidget *parent) :
 
     //double click action allows editing
     this->connect(ui->tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(m_editAction(QModelIndex)));
+
+    // Connect external actions
+    this->connect(this, SIGNAL(addSupplierAction()), this, SLOT(m_manipSupplier()));
 }
 
 void SupplierWidget::m_searchAction()
@@ -78,13 +72,22 @@ void SupplierWidget::m_searchAction()
 
 
     // Change model query
-    m_supplierModel.setQuery(query);
+    m_supplierModel->setQuery(query);
 
 #ifdef _DEBUG
     qDebug() << "Query made: " + query +
-                "\n\tFound " + QString::number(m_supplierModel.rowCount()) + " rows" +
-                "\n\tErrors: " << m_supplierModel.lastError().text();
+                "\n\tFound " + QString::number(m_supplierModel->rowCount()) + " rows" +
+                "\n\tErrors: " << m_supplierModel->lastError().text();
 #endif
+}
+
+void SupplierWidget::m_manipSupplier()
+{
+    SupplierActionDialog diag;
+
+    if(diag.exec() == SupplierActionDialog::Accepted)
+        qDebug() << "Dialog accepted";
+
 }
 
 void SupplierWidget::m_clearSearch()
@@ -93,7 +96,7 @@ void SupplierWidget::m_clearSearch()
     ui->txtSearch->clear();
 
     // Reset model
-    m_supplierModel.setQuery("SELECT * FROM suppliers");
+    m_supplierModel->setQuery("SELECT * FROM suppliers");
 }
 
 void SupplierWidget::m_editAction(const QModelIndex &index)

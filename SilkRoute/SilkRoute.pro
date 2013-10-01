@@ -50,7 +50,8 @@ SOURCES += main.cpp\
     Users/usertable.cpp \
     Suppliers/supplierwidget.cpp \
     Suppliers/supplieractiondialog.cpp \
-    Stock/stockwidget.cpp
+    Stock/stockwidget.cpp \
+    Suppliers/suppliertable.cpp
 
 HEADERS  += mainwindow.h \
     Users/logindialog.h \
@@ -61,7 +62,8 @@ HEADERS  += mainwindow.h \
     Database/itable.h \
     Suppliers/supplierwidget.h \
     Suppliers/supplieractiondialog.h \
-    Stock/stockwidget.h
+    Stock/stockwidget.h \
+    Suppliers/suppliertable.h
 
 FORMS    += mainwindow.ui \
     Users/logindialog.ui \

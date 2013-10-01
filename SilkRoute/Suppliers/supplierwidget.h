@@ -7,6 +7,10 @@
 // For table actions
 #include <QModelIndex>
 
+// My includes
+#include <SilkRoute/Suppliers/supplieractiondialog.h>
+#include <SilkRoute/Suppliers/suppliertable.h>
+
 namespace Ui {
 class SupplierWidget;
 }
@@ -19,29 +23,28 @@ public:
     explicit SupplierWidget(QWidget *parent = 0);
     ~SupplierWidget();
 
+signals:
+    // Called when supplier manipulation is required
+    void addSupplierAction();
+
 private slots:
     void m_searchAction();
     void m_clearSearch();
+
+    // Supplier manipulations
+    void m_manipSupplier();
 
     void m_editAction(const QModelIndex& index);
 
 private:
     Ui::SupplierWidget *ui;
 
-    // TODO: Move to suppliertable
-    // Provides enums for column access, keep stuff simple
-    enum SUP_COLUMNS
-    {
-        ID,
-        NAME,
-        PROFIT,
-        EXPENDITURE,
-        LAST_TRANSACTION
-    };
-
     // Model for data grabbing from SQL
     // TODO: Implement as QSqlRelationalTableModel()
-    QSqlQueryModel m_supplierModel;
+    SupplierTable* m_supplierModel;
+
+    // Supplier manipulation dialog
+    //SupplierActionDialog* m_supDiag;
 };
 
 #endif // SUPPLIERWIDGET_H
