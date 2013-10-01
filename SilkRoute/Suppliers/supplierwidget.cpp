@@ -46,11 +46,13 @@ SupplierWidget::SupplierWidget(QWidget *parent) :
     ui->tableView->setColumnWidth(LAST_TRANSACTION, ui->tableView->columnWidth(LAST_TRANSACTION) + 10);
 
     // Set search validator, so as to avoid SQL Injections
-    //ui->txtSearch->setValidator(DB::ITable::GetAlNumValidator(this));
+    ui->txtSearch->setValidator(DB::ITable::GetAlNumValidator(this));
 
     // Make connections ==============================================================
     //txtSearch
     this->connect(ui->txtSearch, SIGNAL(returnPressed()), this, SLOT(m_searchAction()));
+    // Clear search, reset model
+    this->connect(ui->btnClearSearch, SIGNAL(clicked()), this, SLOT(m_clearSearch()));
 
     //double click action allows editing
     this->connect(ui->tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(m_editAction(QModelIndex)));
@@ -62,41 +64,47 @@ void SupplierWidget::m_searchAction()
     qDebug() << "Searching Suppliers...";
 #endif
 
+    QString search = ui->txtSearch->text();
 
-    /*
-    if(accepted)
+    QString query("SELECT * FROM suppliers");
+
+    if(!search.isEmpty())
     {
-        QString query("SELECT * FROM suppliers");
+        // Sanitize input
+        //search = DB::ITable::SanitizeQuery(search);
 
-        if(!search.isEmpty())
-        {
-            // Sanitize input
-            //search = DB::ITable::SanitizeQuery(search);
-
-            query += " WHERE id LIKE \"%" + search + "%\" OR name LIKE \"%" + search + "%\"";
-        }
+        query += " WHERE id LIKE \"%" + search + "%\" OR name LIKE \"%" + search + "%\"";
+    }
 
 
-        // Change model query
-        m_supplierModel.setQuery(query);
+    // Change model query
+    m_supplierModel.setQuery(query);
 
 #ifdef _DEBUG
-        qDebug() << "Query made: " + query +
-                    "\n\tFound " + QString::number(m_supplierModel.rowCount()) + " rows" +
-                    "\n\tErrors: " << m_supplierModel.lastError();
+    qDebug() << "Query made: " + query +
+                "\n\tFound " + QString::number(m_supplierModel.rowCount()) + " rows" +
+                "\n\tErrors: " << m_supplierModel.lastError().text();
 #endif
-    }*/
+}
+
+void SupplierWidget::m_clearSearch()
+{
+    // Clear search from txtSearch
+    ui->txtSearch->clear();
+
+    // Reset model
+    m_supplierModel.setQuery("SELECT * FROM suppliers");
 }
 
 void SupplierWidget::m_editAction(const QModelIndex &index)
 {
-    QMessageBox::information(this, "Not implemented",
-                             "The edit functionality is yet to be implemented\nDo you want to edit row " +
-                             QString::number(index.row()) + "?", QMessageBox::Ok);
+QMessageBox::information(this, "Not implemented",
+                         "The edit functionality is yet to be implemented\nDo you want to edit row " +
+                         QString::number(index.row()) + "?", QMessageBox::Ok);
 
 }
 
 SupplierWidget::~SupplierWidget()
 {
-    delete ui;
+delete ui;
 }

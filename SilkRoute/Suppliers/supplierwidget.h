@@ -21,6 +21,8 @@ public:
 
 private slots:
     void m_searchAction();
+    void m_clearSearch();
+
     void m_editAction(const QModelIndex& index);
 
 private:
@@ -38,6 +40,7 @@ private:
     };
 
     // Model for data grabbing from SQL
+    // TODO: Implement as QSqlRelationalTableModel()
     QSqlQueryModel m_supplierModel;
 };
 

@@ -48,4 +48,9 @@ namespace DB
 
         return CON_SUCCESS;
     }
+
+    void DBConnector::close()
+    {
+        m_db.close();
+    }
 }

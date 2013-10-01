@@ -22,6 +22,8 @@ namespace DB
     public:
         // Initlize DB with default SQLite driver
         DBConnector();
+        // Close connection when destructor is called
+        ~DBConnector() { close(); }
 
         // Make connection to database
         int connect(const QString& filename);

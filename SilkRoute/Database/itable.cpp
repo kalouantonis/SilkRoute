@@ -25,7 +25,7 @@ namespace DB
     QRegExpValidator* ITable::GetAlNumValidator(QObject* parent)
     {
         //QRegExp re("[A-Za-z0-9]", Qt::CaseInsensitive);
-        return new QRegExpValidator(QRegExp("[A-Za-z0-9]"), parent);
+        return new QRegExpValidator(QRegExp("[A-Za-z0-9]+"), parent);
     }
 
     ITable::~ITable()
