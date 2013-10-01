@@ -60,25 +60,16 @@ void SupplierWidget::m_searchAction()
 
     QString search = ui->txtSearch->text();
 
-    QString query("SELECT * FROM suppliers");
-
     if(!search.isEmpty())
     {
-        // Sanitize input
-        //search = DB::ITable::SanitizeQuery(search);
+        m_supplierModel->Search(search);
 
-        query += " WHERE id LIKE \"%" + search + "%\" OR name LIKE \"%" + search + "%\"";
+        // Exit function
+        return;
     }
 
-
-    // Change model query
-    m_supplierModel->setQuery(query);
-
-#ifdef _DEBUG
-    qDebug() << "Query made: " + query +
-                "\n\tFound " + QString::number(m_supplierModel->rowCount()) + " rows" +
-                "\n\tErrors: " << m_supplierModel->lastError().text();
-#endif
+    // No search value, select all values
+    m_supplierModel->SelectAll();
 }
 
 void SupplierWidget::m_manipSupplier()
@@ -96,18 +87,17 @@ void SupplierWidget::m_clearSearch()
     ui->txtSearch->clear();
 
     // Reset model
-    m_supplierModel->setQuery("SELECT * FROM suppliers");
+    m_supplierModel->SelectAll();
 }
 
 void SupplierWidget::m_editAction(const QModelIndex &index)
 {
-QMessageBox::information(this, "Not implemented",
-                         "The edit functionality is yet to be implemented\nDo you want to edit row " +
-                         QString::number(index.row()) + "?", QMessageBox::Ok);
-
+    QMessageBox::information(this, "Not implemented",
+                             "The edit functionality is yet to be implemented\nDo you want to edit row " +
+                             QString::number(index.row()) + "?", QMessageBox::Ok);
 }
 
 SupplierWidget::~SupplierWidget()
 {
-delete ui;
+    delete ui;
 }

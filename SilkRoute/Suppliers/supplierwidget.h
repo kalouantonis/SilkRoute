@@ -23,10 +23,6 @@ public:
     explicit SupplierWidget(QWidget *parent = 0);
     ~SupplierWidget();
 
-signals:
-    // Called when supplier manipulation is required
-    void addSupplierAction();
-
 private slots:
     void m_searchAction();
     void m_clearSearch();

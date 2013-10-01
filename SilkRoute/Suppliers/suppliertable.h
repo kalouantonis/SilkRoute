@@ -20,6 +20,10 @@ public:
         LAST_TRANSACTION
     };
 
+    // Select all from table
+    void SelectAll();
+
+    void Search(const QString& term);
 };
 
 #endif // SUPPLIERTABLE_H
