@@ -1,8 +1,8 @@
 #ifndef SUPPLIERWIDGET_H
 #define SUPPLIERWIDGET_H
 
-#include <QWidget>
-#include <QSqlQueryModel>
+#include <SilkRoute/Base/mdiwidget.h>
+
 
 // For table actions
 #include <QModelIndex>
@@ -15,7 +15,7 @@ namespace Ui {
 class SupplierWidget;
 }
 
-class SupplierWidget : public QWidget
+class SupplierWidget: public QWidget
 {
     Q_OBJECT
     

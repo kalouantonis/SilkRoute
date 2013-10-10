@@ -1,7 +1,7 @@
 #ifndef STOCKWIDGET_H
 #define STOCKWIDGET_H
 
-#include <QWidget>
+#include <SilkRoute/Base/mdiwidget.h>
 
 namespace Ui {
 class StockWidget;

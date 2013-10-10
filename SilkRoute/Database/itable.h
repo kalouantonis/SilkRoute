@@ -15,7 +15,7 @@ namespace DB
     {
         Q_OBJECT
     public:
-        ITable(QObject *parent = 0);
+        explicit ITable(QObject *parent = 0);
         virtual ~ITable();
 
         const QString GetLastError();

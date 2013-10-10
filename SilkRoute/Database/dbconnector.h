@@ -21,6 +21,7 @@ namespace DB
         QSqlDatabase m_db;
     public:
         // Initlize DB with default SQLite driver
+        // TODO: Make QObject
         DBConnector();
         // Close connection when destructor is called
         ~DBConnector() { close(); }

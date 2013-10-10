@@ -21,7 +21,10 @@
 // STD Strings
 #include <string>
 
+#include <QCloseEvent>
+
 SupplierWidget::SupplierWidget(QWidget *parent) :
+    //MDIWidget(parent, new SupplierTable(this))
     QWidget(parent),
     ui(new Ui::SupplierWidget)
 {
@@ -35,6 +38,8 @@ SupplierWidget::SupplierWidget(QWidget *parent) :
 
     // Resize transaction header so as to look nice
     ui->tableView->setColumnWidth(SupplierTable::LAST_TRANSACTION, ui->tableView->columnWidth(SupplierTable::LAST_TRANSACTION) + 10);
+    // Resize all columns to fit contents
+    ui->tableView->resizeColumnsToContents();
 
     // Set search validator, so as to avoid SQL Injections
     ui->txtSearch->setValidator(DB::ITable::GetAlNumValidator(this));
@@ -49,7 +54,7 @@ SupplierWidget::SupplierWidget(QWidget *parent) :
     this->connect(ui->tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(m_editAction(QModelIndex)));
 
     // Connect external actions
-    this->connect(this, SIGNAL(addSupplierAction()), this, SLOT(m_manipSupplier()));
+    //this->connect(this, SIGNAL(addSupplierAction()), this, SLOT(m_manipSupplier()));
 }
 
 void SupplierWidget::m_searchAction()
@@ -78,14 +83,10 @@ void SupplierWidget::m_manipSupplier()
 
     if(diag.exec() == SupplierActionDialog::Accepted)
         qDebug() << "Dialog accepted";
-
 }
 
 void SupplierWidget::m_clearSearch()
 {
-    // Clear search from txtSearch
-    ui->txtSearch->clear();
-
     // Reset model
     m_supplierModel->SelectAll();
 }
@@ -94,7 +95,7 @@ void SupplierWidget::m_editAction(const QModelIndex &index)
 {
     QMessageBox::information(this, "Not implemented",
                              "The edit functionality is yet to be implemented\nDo you want to edit row " +
-                             QString::number(index.row()) + "?", QMessageBox::Ok);
+                             QString::number(index.row() + 1) + "?", QMessageBox::Ok);
 }
 
 SupplierWidget::~SupplierWidget()

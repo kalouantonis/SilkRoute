@@ -22,7 +22,8 @@ TEMPLATE = app
 SUBDIRS += Suppliers \
             Users     \
             Database   \
-            Stock
+            Stock       \
+            Base
 
 # destination binary directory #########################
 #debug:DESTDIR = ../bin/Debug
@@ -51,7 +52,9 @@ SOURCES += main.cpp\
     Suppliers/supplierwidget.cpp \
     Suppliers/supplieractiondialog.cpp \
     Stock/stockwidget.cpp \
-    Suppliers/suppliertable.cpp
+    Suppliers/suppliertable.cpp \
+    Database/itablemodel.cpp \
+    Base/mdiwidget.cpp
 
 HEADERS  += mainwindow.h \
     Users/logindialog.h \
@@ -63,14 +66,17 @@ HEADERS  += mainwindow.h \
     Suppliers/supplierwidget.h \
     Suppliers/supplieractiondialog.h \
     Stock/stockwidget.h \
-    Suppliers/suppliertable.h
+    Suppliers/suppliertable.h \
+    Database/itablemodel.h \
+    Base/mdiwidget.h
 
 FORMS    += mainwindow.ui \
     Users/logindialog.ui \
     preferencesdialog.ui \
     Suppliers/supplierwidget.ui \
     Suppliers/supplieractiondialog.ui \
-    Stock/stockwidget.ui
+    Stock/stockwidget.ui \
+    Base/mdiwidget.ui
 
 # Pre-processor definitions
 # Only add _DEBUG def when debug compilation is made

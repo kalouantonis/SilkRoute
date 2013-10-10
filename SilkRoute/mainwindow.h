@@ -11,6 +11,7 @@
 #include <SilkRoute/preferencesdialog.h>
 #include <SilkRoute/Suppliers/supplierwidget.h>
 #include <SilkRoute/Stock/stockwidget.h>
+#include <SilkRoute/Base/mdiwidget.h>
 
 namespace Ui {
 class MainWindow;
@@ -49,12 +50,6 @@ private:
 
     // Create toolbar items
     void m_initToolbar();
-
-    // Stores all documents in the MDI
-    QWorkspace* m_workspace;
-
-    // Bundle of signals from identifiable mappers
-    QSignalMapper* m_mapper;
 
     Ui::MainWindow *ui;
 

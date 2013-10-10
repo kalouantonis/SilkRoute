@@ -6,7 +6,7 @@
 #include <QSqlError>
 
 SupplierTable::SupplierTable(QObject* parent)
-    : QSqlQueryModel(parent)
+    : DB::ITableModel(parent)
 {
     // Load default settings for table model
 
@@ -35,6 +35,7 @@ void SupplierTable::Search(const QString &term)
 #ifdef _DEBUG
     qDebug() << "Query made: " + this->query().lastQuery() +
                 "\n\tFound " + QString::number(this->rowCount()) + " rows" +
-                "\n\tErrors: " << this->lastError().text();
+                "\n\tErrors: " << GetLastError();
 #endif
 }
+

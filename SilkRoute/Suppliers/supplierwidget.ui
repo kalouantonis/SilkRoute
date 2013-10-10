@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Suppliers</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../imageres.qrc">
+    <normaloff>:/suppliers/Resources/images/supplier-view.png</normaloff>:/suppliers/Resources/images/supplier-view.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="searchLayout">
@@ -60,7 +64,7 @@
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
      <property name="sortingEnabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -81,6 +85,25 @@
    </item>
   </layout>
  </widget>
- <resources/>
- <connections/>
+ <resources>
+  <include location="../imageres.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>btnClearSearch</sender>
+   <signal>clicked()</signal>
+   <receiver>txtSearch</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>553</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>495</x>
+     <y>17</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

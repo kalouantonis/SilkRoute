@@ -80,7 +80,7 @@ void MainWindow::m_createWidget(const WidgetIDS id, QWidget **widget)
     if(!(*widget))
     {
 #ifdef _DEBUG
-        qDebug() << "Creating widget";
+        qDebug() << "Creating widget...";
 #endif
 
         // Find ID and create appropriate widget
@@ -97,13 +97,13 @@ void MainWindow::m_createWidget(const WidgetIDS id, QWidget **widget)
         default:
             // Create empty widget so as to avoid segfaults through
             // NULL pointer dereferencing
-            (*widget) = new QWidget(this);
+            (*widget) = new Base::MDIWidget(this, NULL);
         }
         // Subscribe sub-window
         ui->mdiArea->addSubWindow(*widget);
 
-        // Show window maximized
-        (*widget)->showMaximized();
+        // Display new widget
+        (*widget)->show();
     }
     else if(!(*widget)->isTopLevel())
     {
@@ -139,6 +139,8 @@ void MainWindow::m_createStockView()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    // Only check when testing mode is not on
+#ifndef _TESTING
     // Create message box, inquire about quiting
     QMessageBox tempQuitMsg(QMessageBox::Warning, "Quit?",
                             "Are you sure you want to quit?",
@@ -149,14 +151,17 @@ void MainWindow::closeEvent(QCloseEvent *event)
         // Quit confirmed, save and quit
 
         // TODO: Save stuff and close open documents
+#endif
 
         // Accept event, quit
         event->accept();
+#ifndef _TESTING
     }
     else
         // Ignore event, pretend nothing happened...
         // let's not talk about this again, ok?
         event->ignore();
+#endif
 }
 
 void MainWindow::OnFullscreenAction(bool checked)

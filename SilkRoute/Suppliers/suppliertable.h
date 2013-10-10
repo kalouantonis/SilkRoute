@@ -1,9 +1,9 @@
 #ifndef SUPPLIERTABLE_H
 #define SUPPLIERTABLE_H
 
-#include <QSqlQueryModel>
+#include <SilkRoute/Database/itablemodel.h>
 
-class SupplierTable: public QSqlQueryModel
+class SupplierTable: public DB::ITableModel
 {
 public:
     SupplierTable(QObject* parent = 0);
@@ -21,9 +21,9 @@ public:
     };
 
     // Select all from table
-    void SelectAll();
+    virtual void SelectAll() final;
 
-    void Search(const QString& term);
+    virtual void Search(const QString& term) final;
 };
 
 #endif // SUPPLIERTABLE_H
