@@ -23,6 +23,9 @@ MDIWidget::MDIWidget(QWidget *parent, DB::ITableModel* tableModel) :
     this->connect(ui->txtSearch, SIGNAL(returnPressed()), this, SLOT(m_searchAction()));
     // Clear search, reset model
     this->connect(ui->btnClearSearch, SIGNAL(clicked()), this, SLOT(m_clearSearch()));
+
+    // Double click action, allows editing
+    this->connect(ui->tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(m_editAction(QModelIndex)));
 }
 
 void MDIWidget::attachModel(DB::ITableModel *model)
