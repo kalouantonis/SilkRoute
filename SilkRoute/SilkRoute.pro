@@ -73,9 +73,7 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     Users/logindialog.ui \
     preferencesdialog.ui \
-    Suppliers/supplierwidget.ui \
     Suppliers/supplieractiondialog.ui \
-    Stock/stockwidget.ui \
     Base/mdiwidget.ui
 
 # Pre-processor definitions
