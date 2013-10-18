@@ -11,11 +11,11 @@
 #include <SilkRoute/Suppliers/supplieractiondialog.h>
 #include <SilkRoute/Suppliers/suppliertable.h>
 
-namespace Ui {
+/*namespace Ui {
 class SupplierWidget;
-}
+}*/
 
-class SupplierWidget: public QWidget
+class SupplierWidget: public Base::MDIWidget
 {
     Q_OBJECT
     
@@ -24,20 +24,15 @@ public:
     ~SupplierWidget();
 
 private slots:
-    void m_searchAction();
-    void m_clearSearch();
+    //void m_searchAction();
+    //void m_clearSearch();
 
     // Supplier manipulations
     void m_manipSupplier();
 
-    void m_editAction(const QModelIndex& index);
+    //void m_editAction(const QModelIndex& index);
 
 private:
-    Ui::SupplierWidget *ui;
-
-    // Model for data grabbing from SQL
-    // TODO: Implement as QSqlRelationalTableModel()
-    SupplierTable* m_supplierModel;
 
     // Supplier manipulation dialog
     //SupplierActionDialog* m_supDiag;

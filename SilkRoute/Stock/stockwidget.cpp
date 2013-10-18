@@ -2,13 +2,14 @@
 #include "ui_stockwidget.h"
 
 StockWidget::StockWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::StockWidget)
+    Base::MDIWidget(parent)
+    //ui(new Ui::StockWidget)
 {
-    ui->setupUi(this);
+    //ui->setupUi(this);
+    this->setWindowTitle("Stock");
 }
 
 StockWidget::~StockWidget()
 {
-    delete ui;
+    //delete ui;
 }

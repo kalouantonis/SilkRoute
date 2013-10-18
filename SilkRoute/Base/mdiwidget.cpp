@@ -6,27 +6,70 @@ namespace Base
 
 MDIWidget::MDIWidget(QWidget *parent, DB::ITableModel* tableModel) :
     QWidget(parent),
-    m_tableModel(tableModel)
-    //ui(new Ui::MDIWidget)
+    ui(new Ui::MDIWidget)
 {
-    //ui->setupUi(this);
-    m_txtSearch = new QLineEdit(this);
-    m_tableView = new QTableView(this);
-    m_btnClearSearch = new QPushButton("Clear", this);
+    ui->setupUi(this);
+
+    attachModel(tableModel);
+
+    // Set search validator, so as to avoid SQL Injections
+    ui->txtSearch->setValidator(DB::ITable::GetAlNumValidator(this));
+
+    // Resize all columns to fit contents
+    ui->tableView->resizeColumnsToContents();
+
+    // Make connections =================================================================
+    //txtSearch
+    this->connect(ui->txtSearch, SIGNAL(returnPressed()), this, SLOT(m_searchAction()));
+    // Clear search, reset model
+    this->connect(ui->btnClearSearch, SIGNAL(clicked()), this, SLOT(m_clearSearch()));
+}
+
+void MDIWidget::attachModel(DB::ITableModel *model)
+{
+    m_tableModel = model;
+
+    // Attach model to view
+    ui->tableView->setModel(m_tableModel);
+}
+
+void MDIWidget::m_searchAction()
+{
+    QString search = ui->txtSearch->text();
+
+    if(!search.isEmpty())
+    {
+        m_tableModel->Search(search);
+
+        // Exit function
+        return;
+    }
+
+    m_tableModel->SelectAll();
+}
+
+void MDIWidget::m_clearSearch()
+{
+    // Clear txtSearch
+    ui->txtSearch->clear();
+
+    // Reset model
+    m_tableModel->SelectAll();
+}
+
+void MDIWidget::m_editAction(const QModelIndex &)
+{
+
 }
 
 MDIWidget::~MDIWidget()
 {
     //delete m_tableModel;
     if(m_tableModel) // If not NULL
-        delete m_tableView;
-
+        delete m_tableModel;
 
     // Delete UI elements
-    delete m_txtSearch;
-    delete m_tableView;
-    delete m_btnClearSearch;
-    //delete ui;
+    delete ui;
 }
 
 } // Namespace Base

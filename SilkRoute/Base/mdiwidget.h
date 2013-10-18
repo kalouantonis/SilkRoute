@@ -12,10 +12,9 @@
 #include <QSpacerItem>
 #include <QLayout>
 
-/*
 namespace Ui {
 class MDIWidget;
-}*/
+}
 
 namespace Base
 {
@@ -25,19 +24,27 @@ class MDIWidget : public QWidget
     Q_OBJECT
     
 public:
-    explicit MDIWidget(QWidget *parent, DB::ITableModel* tableModel = NULL);
-    ~MDIWidget();
+    explicit MDIWidget(QWidget *parent = NULL, DB::ITableModel* model = NULL);
+    virtual ~MDIWidget();
+
+    void attachModel(DB::ITableModel* model);
+
+private slots:
+    // Used by search text widget to find records
+    void m_searchAction();
+
+    // Clear button clicked
+    void m_clearSearch();
+
+    // Edit actions
+    virtual void m_editAction(const QModelIndex& index);
     
 protected:
-    //Ui::MDIWidget *ui;
+    Ui::MDIWidget *ui;
 
+    // Polymorphic Table container
+    // Model for grabbing data from SQL
     DB::ITableModel* m_tableModel;
-
-    // View Items ==============================
-    QPushButton* m_btnClearSearch;
-    QTableView* m_tableView;
-    QLineEdit* m_txtSearch;
-    QSpacerItem* m_spacer;
 };
 
 } // namespace Base

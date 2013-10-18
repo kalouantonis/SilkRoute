@@ -3,11 +3,11 @@
 
 #include <SilkRoute/Base/mdiwidget.h>
 
-namespace Ui {
+/*namespace Ui {
 class StockWidget;
-}
+}*/
 
-class StockWidget : public QWidget
+class StockWidget : public Base::MDIWidget
 {
     Q_OBJECT
     
@@ -16,7 +16,7 @@ public:
     ~StockWidget();
     
 private:
-    Ui::StockWidget *ui;
+    //Ui::StockWidget *ui;
 };
 
 #endif // STOCKWIDGET_H
