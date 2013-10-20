@@ -75,7 +75,7 @@ void MainWindow::m_showPreferences()
     }
 }
 
-void MainWindow::m_createWidget(const WidgetIDS id, QWidget **widget)
+void MainWindow::m_createWidget(const WidgetIDS id, Base::MDIWidget **widget)
 {
     if(!(*widget))
     {
@@ -120,13 +120,14 @@ void MainWindow::m_createWidget(const WidgetIDS id, QWidget **widget)
 void MainWindow::m_createSupplierView()
 {
     // Create the supplier widget
-    m_createWidget(SUPPLIER, (QWidget**)&m_supplierWidget);
+    // TODO: Use dynamic_cast or static_cast
+    m_createWidget(SUPPLIER, (Base::MDIWidget**)&m_supplierWidget);
 }
 
 void MainWindow::m_addSupplierAction()
 {
     // if window is not created, do it, if it is, set to active
-    m_createWidget(SUPPLIER, (QWidget**)&m_supplierWidget);
+    m_createWidget(SUPPLIER, (Base::MDIWidget**)&m_supplierWidget);
 
     // Call signal, the widget handles the rest
     //emit m_supplierWidget->addSupplierAction();
@@ -134,7 +135,7 @@ void MainWindow::m_addSupplierAction()
 
 void MainWindow::m_createStockView()
 {
-    m_createWidget(STOCK, (QWidget**)&m_stockWidget);
+    m_createWidget(STOCK, (Base::MDIWidget**)&m_stockWidget);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

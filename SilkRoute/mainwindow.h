@@ -68,7 +68,7 @@ private:
     // Will add widget to MDI, if it exists, it will check if active
     // if not, it will activate
     // Send pointer to pointer, so as the actual address of widget is exploited
-    void m_createWidget(const WidgetIDS id, QWidget** widget);
+    void m_createWidget(const WidgetIDS id, Base::MDIWidget** widget);
 };
 
 #endif // MAINWINDOW_H

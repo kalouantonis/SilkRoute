@@ -33,6 +33,11 @@ SupplierWidget::SupplierWidget(QWidget *parent) :
 
     this->setWindowTitle(tr("Suppliers"));
 
+    // Set icon for window
+    QIcon winIcon;
+    winIcon.addFile(QString::fromUtf8(":suppliers/Resources/images/supplier-view.png"), QSize(), QIcon::Normal, QIcon::On);
+    this->setWindowIcon(winIcon);
+
     // Make connections ==============================================================
 
     // Connect external actions
