@@ -24,9 +24,12 @@
 
 #include <QCloseEvent>
 
+
 SupplierWidget::SupplierWidget(QWidget *parent) :
     Base::MDIWidget(parent, new SupplierTable(NULL))
 {
+    // Better recognition from parents
+    this->setObjectName(SupplierObjectName);
 
     // Resize transaction header so as to look nice
     ui->tableView->setColumnWidth(SupplierTable::LAST_TRANSACTION, ui->tableView->columnWidth(SupplierTable::LAST_TRANSACTION) + 10);
@@ -41,7 +44,7 @@ SupplierWidget::SupplierWidget(QWidget *parent) :
     // Make connections ==============================================================
 
     // Connect external actions
-    //this->connect(this, SIGNAL(addSupplierAction()), this, SLOT(m_manipSupplier()));
+    //this->connect(, this, SLOT(m_manipSupplier()));
 }
 
 void SupplierWidget::m_manipSupplier()
@@ -49,7 +52,7 @@ void SupplierWidget::m_manipSupplier()
     SupplierActionDialog diag;
 
     if(diag.exec() == SupplierActionDialog::Accepted)
-        qDebug() << "Dialog accepted";
+        qDebug() << "Dialog accepted with data: " << diag.data();
 }
 
 void SupplierWidget::m_editAction(const QModelIndex &index)

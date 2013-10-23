@@ -8,6 +8,16 @@ SupplierActionDialog::SupplierActionDialog(QWidget *parent) :
     ui->setupUi(this);
 }
 
+SupplierActionDialog::SupplierData SupplierActionDialog::data() const
+{
+    return ui->txtName->text();
+}
+
+void SupplierActionDialog::setData(const SupplierData &data)
+{
+    ui->txtName->setText(data);
+}
+
 SupplierActionDialog::~SupplierActionDialog()
 {
     delete ui;

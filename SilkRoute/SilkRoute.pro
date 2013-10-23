@@ -23,12 +23,12 @@ SUBDIRS += Suppliers \
             Users     \
             Database   \
             Stock       \
-            Base
+            Base#
 
 # destination binary directory #########################
 #debug:DESTDIR = ../bin/Debug
 #release:DESTDIR = ../bin/Release
-DESTDIR = ../../bin
+DESTDIR = ../bin
 
 # Object build directory ###############################
 #OBJECTS_DIR = ../obj
@@ -36,7 +36,7 @@ DESTDIR = ../../bin
 #UI_DIR = ../obj/ui
 
 # Post build dependencies
-POST_TARGETDEPS += ../../data.sqlite
+POST_TARGETDEPS += ../data.sqlite
 
 # Include all files from current dir
 INCLUDEPATH = ../

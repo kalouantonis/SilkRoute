@@ -11,6 +11,7 @@
 #include <QPushButton>
 #include <QSpacerItem>
 #include <QLayout>
+#include <QCloseEvent>
 
 namespace Ui {
 class MDIWidget;
@@ -18,6 +19,8 @@ class MDIWidget;
 
 namespace Base
 {
+
+const QString MDIObjectName = "MDIWidget";
 
 class MDIWidget : public QWidget
 {
@@ -45,6 +48,9 @@ protected:
     // Polymorphic Table container
     // Model for grabbing data from SQL
     DB::ITableModel* m_tableModel;
+
+private:
+    void closeEvent(QCloseEvent*);
 };
 
 } // namespace Base

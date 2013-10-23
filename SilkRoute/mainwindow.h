@@ -41,8 +41,6 @@ private slots:
     void m_addSupplierAction();
 
     void m_showPreferences();
-
-
 private:
     // Called when any event invokes a close,
     // so that I can check if user wishes to quit
@@ -69,6 +67,7 @@ private:
     // if not, it will activate
     // Send pointer to pointer, so as the actual address of widget is exploited
     void m_createWidget(const WidgetIDS id, Base::MDIWidget** widget);
+
 };
 
 #endif // MAINWINDOW_H

@@ -17,14 +17,24 @@ public:
 
     // Used for transferring data to and from
     // supplier widget
+    /*
     typedef struct SupplierData
     {
            int id;
            QString name;
-           float profit;
-           float expenditure;
-           int last_transaction;
-    } SupplierData;
+           //float profit;
+           //float expenditure;
+           //int last_transaction;
+    } SupplierData;*/
+
+    typedef QString SupplierData;
+
+    // Return data contained in text field
+    SupplierData data() const;
+
+    // Sets data in text field
+    void setData(const SupplierData& data);
+
     
 private:
     Ui::SupplierActionDialog *ui;

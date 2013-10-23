@@ -1,6 +1,8 @@
 #include "mdiwidget.h"
 #include "ui_mdiwidget.h"
 
+#include <QDebug>
+
 namespace Base
 {
 
@@ -9,6 +11,8 @@ MDIWidget::MDIWidget(QWidget *parent, DB::ITableModel* tableModel) :
     ui(new Ui::MDIWidget)
 {
     ui->setupUi(this);
+
+    this->setObjectName(MDIObjectName);
 
     attachModel(tableModel);
 
@@ -26,6 +30,12 @@ MDIWidget::MDIWidget(QWidget *parent, DB::ITableModel* tableModel) :
 
     // Double click action, allows editing
     this->connect(ui->tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(m_editAction(QModelIndex)));
+}
+
+void MDIWidget::closeEvent(QCloseEvent* event)
+{
+    //this->setShown(false);
+    qDebug() << "Close event called on widget";
 }
 
 void MDIWidget::attachModel(DB::ITableModel *model)

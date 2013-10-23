@@ -44,7 +44,7 @@ void MainWindow::m_createActions()
     this->connect(ui->actionView_Transactions, SIGNAL(triggered()), this,
                   SLOT(m_createTransactionView()));
 
-    // COnnect side bar buttons =========================================================
+    // Connect side bar buttons =========================================================
     // Views
     this->connect(ui->btnSupView, SIGNAL(clicked()), this,
                   SLOT(m_createSupplierView()));
@@ -53,7 +53,6 @@ void MainWindow::m_createActions()
 
     // Add
     this->connect(ui->btnSupAdd, SIGNAL(clicked()), this, SLOT(m_addSupplierAction()));
-
 }
 
 void MainWindow::m_initToolbar()
@@ -77,35 +76,39 @@ void MainWindow::m_showPreferences()
 
 void MainWindow::m_createWidget(const WidgetIDS id, Base::MDIWidget **widget)
 {
-    if(!(*widget))
-    {
 #ifdef _DEBUG
         qDebug() << "Creating widget...";
 #endif
+
+        const QString currWidgetName = this->centralWidget()->objectName();
 
         // Find ID and create appropriate widget
         switch(id)
         {
         case SUPPLIER:
-            (*widget) = new SupplierWidget(this);
+            if(currWidgetName != SupplierObjectName)
+                (*widget) = new SupplierWidget(this);
             break;
         case TRANSACTION:
             break;
         case STOCK:
-            (*widget) = new StockWidget(this);
+            if(currWidgetName != StockObjectName)
+                (*widget) = new StockWidget(this);
             break;
         default:
             // Create empty widget so as to avoid segfaults through
             // NULL pointer dereferencing
-            (*widget) = new Base::MDIWidget(this, NULL);
+            (*widget) = new Base::MDIWidget(this);
         }
         // Subscribe sub-window
-        ui->mdiArea->addSubWindow(*widget);
+        //ui->mdiArea->addSubWindow(*widget);
 
         // Display new widget
-        (*widget)->show();
-    }
-    else if(!(*widget)->isTopLevel())
+        (*widget)->showMaximized();
+
+        this->setCentralWidget(*widget);
+
+    /*else if(!(*widget)->isTopLevel())
     {
 #ifdef _DEBUG
         qDebug() << "Widget already exists but not active, setting as active";
@@ -113,7 +116,7 @@ void MainWindow::m_createWidget(const WidgetIDS id, Base::MDIWidget **widget)
 
         // If not active, but exists, set as active
         (*widget)->setFocus();
-    }
+    }*/
 
 }
 
@@ -121,21 +124,32 @@ void MainWindow::m_createSupplierView()
 {
     // Create the supplier widget
     // TODO: Use dynamic_cast or static_cast
+    //m_createWidget(SUPPLIER, (Base::MDIWidget**)&m_supplierWidget);
+    //m_supplierWidget = new SupplierWidget(this);
+    //m_supplierWidget->showMaximized();
+
+    //this->setCentralWidget(m_supplierWidget);
     m_createWidget(SUPPLIER, (Base::MDIWidget**)&m_supplierWidget);
 }
 
 void MainWindow::m_addSupplierAction()
 {
     // if window is not created, do it, if it is, set to active
-    m_createWidget(SUPPLIER, (Base::MDIWidget**)&m_supplierWidget);
+    //m_createWidget(SUPPLIER, (Base::MDIWidget**)&m_supplierWidget);
 
     // Call signal, the widget handles the rest
     //emit m_supplierWidget->addSupplierAction();
+
 }
 
 void MainWindow::m_createStockView()
 {
     m_createWidget(STOCK, (Base::MDIWidget**)&m_stockWidget);
+    m_stockWidget = new StockWidget(this);
+
+    m_stockWidget->showMaximized();
+
+    this->setCentralWidget(m_stockWidget);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -153,6 +167,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
         // TODO: Save stuff and close open documents
 #endif
+
+        // Close all subwindows
 
         // Accept event, quit
         event->accept();

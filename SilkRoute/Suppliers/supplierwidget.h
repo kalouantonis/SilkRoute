@@ -10,6 +10,8 @@
 #include <SilkRoute/Suppliers/supplieractiondialog.h>
 #include <SilkRoute/Suppliers/suppliertable.h>
 
+const QString SupplierObjectName = "SupplierWidget";
+
 class SupplierWidget: public Base::MDIWidget
 {
     Q_OBJECT
