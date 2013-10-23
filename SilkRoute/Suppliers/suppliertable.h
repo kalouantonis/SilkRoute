@@ -8,6 +8,16 @@ class SupplierTable: public DB::ITableModel
 public:
     SupplierTable(QObject* parent = 0);
 
+    // Used for transferring all supplier data
+    typedef struct SupplierData
+    {
+           int id;
+           QString name;
+           float profit;
+           float expenditure;
+           int last_transaction;
+    } SupplierData;
+
 
     // TODO: Move to suppliertable
     // Provides enums for column access, keep stuff simple
@@ -24,6 +34,9 @@ public:
     virtual void SelectAll() final;
 
     virtual void Search(const QString& term) final;
+
+    // Will return false if query failed
+    bool Insert(const SupplierData& data);
 };
 
 #endif // SUPPLIERTABLE_H

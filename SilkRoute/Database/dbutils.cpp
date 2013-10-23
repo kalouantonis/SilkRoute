@@ -7,7 +7,7 @@ bool CreateAllTables()
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, admin INTEGER)");
 
     qry.prepare("CREATE TABLE IF NOT EXISTS \"main\".\"suppliers\" ("
-                "\"id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+                "\"id\" INTEGER PRIMARY KEY AUTOINCREMENT,"
                 "\"name\" TEXT,"
                 "\"profit\" REAL,"
                 "\"expenditure\" REAL,"

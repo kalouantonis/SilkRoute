@@ -20,6 +20,9 @@ public:
     explicit SupplierWidget(QWidget *parent = 0);
     ~SupplierWidget();
 
+public slots:
+    void addSupplier();
+
 private slots:
     // Supplier manipulations
     void m_manipSupplier();

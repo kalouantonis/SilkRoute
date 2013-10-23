@@ -39,3 +39,30 @@ void SupplierTable::Search(const QString &term)
 #endif
 }
 
+
+bool SupplierTable::Insert(const SupplierData &data)
+{
+    QSqlQuery qry;
+    qry.prepare("INSERT INTO suppliers (name, profit, expenditure, last_transaction) VALUES (\":name\", :profit, :expenditure, :last_trans)");
+
+    qry.bindValue(":name", data.name);
+    qry.bindValue(":profit", data.profit);
+    qry.bindValue(":expenditure", data.expenditure);
+    qry.bindValue(":last_trans", data.last_transaction);
+
+    if(!qry.exec())
+    {
+#ifdef _DEBUG
+        qDebug() << "Query failed -- SupplierTable::Insert";
+        qDebug() << '\t' << qry.lastError();
+        qDebug() << '\t' << qry.lastQuery();
+#endif
+        return false;
+    }
+
+#ifdef _DEBUG
+    qDebug() << "Query made: " << qry.lastQuery();
+#endif
+
+    return true;
+}

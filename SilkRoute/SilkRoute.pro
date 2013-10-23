@@ -80,6 +80,9 @@ FORMS    += mainwindow.ui \
 # Only add _DEBUG def when debug compilation is made
 QMAKE_CXXFLAGS_DEBUG += "-D_DEBUG" \
                         "-D_TESTING"
+
+QMAKE_CXXFLAGS_RELEASE += "-DNDEBUG"
+
 # C++11 support
 QMAKE_CXXFLAGS += -std=c++11
 

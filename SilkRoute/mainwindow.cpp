@@ -4,12 +4,11 @@
 #include <QCloseEvent>
 
 #include <QDebug>
+#include <cassert>
 
 MainWindow::MainWindow(QWidget *parent, bool admin) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    m_supplierWidget(NULL),
-    m_stockWidget(NULL)
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
@@ -74,82 +73,81 @@ void MainWindow::m_showPreferences()
     }
 }
 
-void MainWindow::m_createWidget(const WidgetIDS id, Base::MDIWidget **widget)
+QWidget* MainWindow::m_createWidget(const WidgetIDS id)
 {
-#ifdef _DEBUG
-        qDebug() << "Creating widget...";
-#endif
+    // TODO: Add return for widget, so that actions can be performed after its creation
 
-        const QString currWidgetName = this->centralWidget()->objectName();
+    const QString currWidgetName = this->centralWidget()->objectName();
 
-        // Find ID and create appropriate widget
-        switch(id)
-        {
-        case SUPPLIER:
-            if(currWidgetName != SupplierObjectName)
-                (*widget) = new SupplierWidget(this);
-            break;
-        case TRANSACTION:
-            break;
-        case STOCK:
-            if(currWidgetName != StockObjectName)
-                (*widget) = new StockWidget(this);
-            break;
-        default:
-            // Create empty widget so as to avoid segfaults through
-            // NULL pointer dereferencing
-            (*widget) = new Base::MDIWidget(this);
-        }
-        // Subscribe sub-window
-        //ui->mdiArea->addSubWindow(*widget);
+    QWidget* tmpWidget = NULL;
 
-        // Display new widget
-        (*widget)->showMaximized();
-
-        this->setCentralWidget(*widget);
-
-    /*else if(!(*widget)->isTopLevel())
+    // Find ID and create appropriate widget
+    switch(id)
     {
+    case SUPPLIER:
+        if(currWidgetName != SupplierObjectName)
+        {
+            tmpWidget = new SupplierWidget(this);
+
 #ifdef _DEBUG
-        qDebug() << "Widget already exists but not active, setting as active";
+            qDebug() << "Creating new supplier widget";
 #endif
+        }
+        break;
+    case TRANSACTION:
+        break;
+    case STOCK:
+        if(currWidgetName != StockObjectName)
+        {
+            tmpWidget = new StockWidget(this);
 
-        // If not active, but exists, set as active
-        (*widget)->setFocus();
-    }*/
+#ifdef _DEBUG
+            qDebug() << "Creating new StockWidget";
+#endif
+        }
+        break;
+    default:
+        // Create empty widget so as to avoid segfaults through
+        // NULL pointer dereferencing
+        tmpWidget = new Base::MDIWidget(this);
 
+#ifdef _DEBUG
+        qDebug() << "MainWindow::m_createWidget -- Invalid ID found, creating generic MDIWidget";
+#endif
+    }
+
+    // If not found, then revert to current widget
+    if(!tmpWidget)
+        tmpWidget = this->centralWidget();
+
+    // Check for null ptr, memory error exists if NULL
+    assert(tmpWidget != NULL);
+
+    // Display new widget
+    tmpWidget->showMaximized();
+
+    this->setCentralWidget(tmpWidget);
+
+    return tmpWidget;
 }
 
 void MainWindow::m_createSupplierView()
 {
     // Create the supplier widget
-    // TODO: Use dynamic_cast or static_cast
-    //m_createWidget(SUPPLIER, (Base::MDIWidget**)&m_supplierWidget);
-    //m_supplierWidget = new SupplierWidget(this);
-    //m_supplierWidget->showMaximized();
-
-    //this->setCentralWidget(m_supplierWidget);
-    m_createWidget(SUPPLIER, (Base::MDIWidget**)&m_supplierWidget);
+    m_createWidget(SUPPLIER);
 }
 
 void MainWindow::m_addSupplierAction()
 {
     // if window is not created, do it, if it is, set to active
-    //m_createWidget(SUPPLIER, (Base::MDIWidget**)&m_supplierWidget);
+    SupplierWidget* widget = qobject_cast<SupplierWidget*>(m_createWidget(SUPPLIER));
 
-    // Call signal, the widget handles the rest
-    //emit m_supplierWidget->addSupplierAction();
-
+    widget->addSupplier();
 }
 
 void MainWindow::m_createStockView()
 {
-    m_createWidget(STOCK, (Base::MDIWidget**)&m_stockWidget);
-    m_stockWidget = new StockWidget(this);
-
-    m_stockWidget->showMaximized();
-
-    this->setCentralWidget(m_stockWidget);
+    m_createWidget(STOCK);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

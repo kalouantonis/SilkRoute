@@ -47,12 +47,28 @@ SupplierWidget::SupplierWidget(QWidget *parent) :
     //this->connect(, this, SLOT(m_manipSupplier()));
 }
 
-void SupplierWidget::m_manipSupplier()
+void SupplierWidget::addSupplier()
 {
-    SupplierActionDialog diag;
+    qDebug() << "Adding supplier...";
+
+    SupplierActionDialog diag(this);
 
     if(diag.exec() == SupplierActionDialog::Accepted)
-        qDebug() << "Dialog accepted with data: " << diag.data();
+    {
+        // Convert to SupplierTable, check this doesnt screw things up
+        SupplierTable* table = (SupplierTable*)m_tableModel;
+        if(!table->Insert(diag.data()))
+            qDebug() << "Insert statement failed: SupplierWidget::addSupplier()";
+            // TODO: Add popup thing
+    }
+}
+
+void SupplierWidget::m_manipSupplier()
+{
+    SupplierActionDialog diag(this);
+
+    if(diag.exec() == SupplierActionDialog::Accepted)
+        qDebug() << "Dialog accepted";
 }
 
 void SupplierWidget::m_editAction(const QModelIndex &index)

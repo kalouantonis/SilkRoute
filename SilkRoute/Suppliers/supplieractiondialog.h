@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include <SilkRoute/Suppliers/suppliertable.h>
+
 namespace Ui {
 class SupplierActionDialog;
 }
@@ -15,25 +17,12 @@ public:
     explicit SupplierActionDialog(QWidget *parent = 0);
     ~SupplierActionDialog();
 
-    // Used for transferring data to and from
-    // supplier widget
-    /*
-    typedef struct SupplierData
-    {
-           int id;
-           QString name;
-           //float profit;
-           //float expenditure;
-           //int last_transaction;
-    } SupplierData;*/
-
-    typedef QString SupplierData;
 
     // Return data contained in text field
-    SupplierData data() const;
+    SupplierTable::SupplierData data() const;
 
     // Sets data in text field
-    void setData(const SupplierData& data);
+    void setData(const SupplierTable::SupplierData& data);
 
     
 private:
