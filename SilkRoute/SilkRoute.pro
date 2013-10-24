@@ -79,7 +79,8 @@ FORMS    += mainwindow.ui \
 # Pre-processor definitions
 # Only add _DEBUG def when debug compilation is made
 QMAKE_CXXFLAGS_DEBUG += "-D_DEBUG" \
-                        "-D_TESTING"
+                        "-D_TESTING" \
+                        "-Wno-missing-field-initializers" # Get rid of pesky(useless) warnings in debug mode
 
 QMAKE_CXXFLAGS_RELEASE += "-DNDEBUG"
 

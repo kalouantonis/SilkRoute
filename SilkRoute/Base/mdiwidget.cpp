@@ -33,11 +33,6 @@ MDIWidget::MDIWidget(QWidget *parent, DB::ITableModel* tableModel) :
     this->connect(ui->tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(m_editAction(QModelIndex)));
 }
 
-void MDIWidget::closeEvent(QCloseEvent* event)
-{
-    //this->setShown(false);
-    qDebug() << "Close event called on widget";
-}
 
 void MDIWidget::attachModel(DB::ITableModel *model)
 {

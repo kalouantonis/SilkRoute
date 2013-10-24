@@ -6,6 +6,9 @@
 
 #include <QApplication>
 
+#include <QSplashScreen>
+#include <QPixmap>
+
 // DB data
 // TODO: Use function to parse settins file and locate DB name
 const QString dbname = "data.sqlite";
@@ -17,11 +20,18 @@ const QString appVersion = "1.0.2";
 
 int main(int argc, char** argv)
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
     // Set parameters for application
-    a.setApplicationName(appName);
-    a.setApplicationVersion(appVersion);
+    app.setApplicationName(appName);
+    app.setApplicationVersion(appVersion);
 
+#ifndef _TESTING
+        // TODO: Make a nice splash screen
+        QPixmap splashImage(":suppliers/Resources/images/supplier-view.png");
+        // Set parent to desktop
+        QSplashScreen splash((QWidget*)app.desktop(), splashImage, Qt::WindowStaysOnTopHint);
+        splash.show();
+#endif
 
     // Create DB connection
     DB::DBConnector database;
@@ -49,6 +59,14 @@ int main(int argc, char** argv)
         // Set parent as the main window
         LoginDialog loginDiag(NULL);
 
+
+        // Make app process all events before app starts, give time for parsers, settings and db to finalize
+        if(app.hasPendingEvents())
+            app.processEvents();
+
+        // Remove splash, show login dialog
+        splash.finish(&loginDiag);
+
         if(loginDiag.exec() == QDialog::Accepted)
         {
 
@@ -61,7 +79,7 @@ int main(int argc, char** argv)
             MainWindow w(NULL, admin);
 
             w.show();
-            return a.exec();
+            return app.exec();
 
 #ifndef _TESTING
         }
@@ -78,5 +96,5 @@ int main(int argc, char** argv)
     }
 
         // Exit program
-    a.quit();
+    app.quit();
 }

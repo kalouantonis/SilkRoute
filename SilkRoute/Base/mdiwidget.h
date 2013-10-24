@@ -47,9 +47,6 @@ protected:
     // Polymorphic Table container
     // Model for grabbing data from SQL
     DB::ITableModel* m_tableModel;
-
-private:
-    void closeEvent(QCloseEvent*);
 };
 
 } // namespace Base

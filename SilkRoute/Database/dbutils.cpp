@@ -23,10 +23,8 @@ bool CreateAllTables(const QString& filename)
         return false;
     }
 
-
     // SQL Query to be performed
     QSqlQuery qry;
-
 
     // Create text stream for file data
     QTextStream dataStream(&schema_file);
@@ -42,6 +40,7 @@ bool CreateAllTables(const QString& filename)
         {
             // Add statement to qry
             qry.prepare(tmpData);
+
 #ifdef _DEBUG
             // This will slow down execution alot, so only use in debug mode
             qDebug() << "Executing query: " << tmpData;
