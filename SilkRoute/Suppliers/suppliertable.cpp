@@ -42,13 +42,15 @@ void SupplierTable::Search(const QString &term)
 
 bool SupplierTable::Insert(const SupplierData &data)
 {
-    QSqlQuery qry;
-    qry.prepare("INSERT INTO suppliers (name, profit, expenditure, last_transaction) VALUES (\":name\", :profit, :expenditure, :last_trans)");
+    QSqlQuery qry("INSERT INTO suppliers (name, profit, expenditure, last_transaction) VALUES ('" + data.name
+                  + "', " + QString::number(data.profit) + ", " + QString::number(data.expenditure)
+                  + ", " + QString::number(data.last_transaction) + ")");
+    //qry.prepare("INSERT INTO suppliers (name, profit, expenditure, last_transaction) VALUES (\":name\", :profit, :expenditure, :last_trans)");
 
-    qry.bindValue(":name", data.name);
-    qry.bindValue(":profit", data.profit);
-    qry.bindValue(":expenditure", data.expenditure);
-    qry.bindValue(":last_trans", data.last_transaction);
+    //qry.bindValue(":name", data.name);
+    //qry.bindValue(":profit", data.profit);
+    //qry.bindValue(":expenditure", data.expenditure);
+    //qry.bindValue(":last_trans", data.last_transaction);
 
     if(!qry.exec())
     {
@@ -63,6 +65,9 @@ bool SupplierTable::Insert(const SupplierData &data)
 #ifdef _DEBUG
     qDebug() << "Query made: " << qry.lastQuery();
 #endif
+
+    // Send data changed signal, refresh query
+    emit dataChanged();
 
     return true;
 }

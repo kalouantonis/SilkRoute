@@ -20,8 +20,6 @@ namespace DB
 
         const QString GetLastError();
 
-        // Returns alphanumberic regex expression for use as a validator
-        static QRegExpValidator* GetAlNumValidator(QObject* parent = 0);
 
     protected:
         // Clear SQL Query class

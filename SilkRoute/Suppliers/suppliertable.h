@@ -13,8 +13,8 @@ public:
     {
            int id;
            QString name;
-           float profit;
-           float expenditure;
+           double profit;
+           double expenditure;
            int last_transaction;
     } SupplierData;
 

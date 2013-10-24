@@ -21,6 +21,12 @@ public:
     virtual void Search(const QString& term) = 0;
 
     const QString GetLastError();
+
+signals:
+    void dataChanged();
+
+private slots:
+    void updateAllData() { this->SelectAll(); }
 };
 
 }

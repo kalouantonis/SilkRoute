@@ -9,6 +9,8 @@
 // DB data
 // TODO: Use function to parse settins file and locate DB name
 const QString dbname = "data.sqlite";
+// Contained in compiled resources
+const QString schema_name = ":database/Resources/schema.sql";
 
 const QString appName = "Silk Route Accounting";
 const QString appVersion = "1.0.2";
@@ -26,7 +28,7 @@ int main(int argc, char** argv)
     if(database.connect(dbname) != DB::CON_FAILED)
     {
         // Create all tables if they do not exist
-        if(!CreateAllTables())
+        if(!DB::CreateAllTables(schema_name))
         {
             // Failed to create tables, quit
 

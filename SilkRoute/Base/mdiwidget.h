@@ -3,7 +3,6 @@
 
 #include <QWidget>
 
-#include <SilkRoute/Database/itable.h>
 #include <SilkRoute/Database/itablemodel.h>
 
 #include <QLineEdit>

@@ -19,4 +19,7 @@
     <qresource prefix="/transactions">
         <file>Resources/images/transactions-view.png</file>
     </qresource>
+    <qresource prefix="/database">
+        <file>Resources/schema.sql</file>
+    </qresource>
 </RCC>

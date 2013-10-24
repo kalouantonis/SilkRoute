@@ -63,19 +63,19 @@ void SupplierWidget::addSupplier()
     }
 }
 
-void SupplierWidget::m_manipSupplier()
-{
-    SupplierActionDialog diag(this);
-
-    if(diag.exec() == SupplierActionDialog::Accepted)
-        qDebug() << "Dialog accepted";
-}
 
 void SupplierWidget::m_editAction(const QModelIndex &index)
 {
-    QMessageBox::information(this, "Not implemented",
-                             "The edit functionality is yet to be implemented\nDo you want to edit row " +
-                             QString::number(index.row() + 1) + "?", QMessageBox::Ok);
+    // Get data from table index
+    SupplierTable::SupplierData data = { 0 };
+
+    data.name = m_tableModel->data(m_tableModel->index(index.row(), (int)SupplierTable::NAME)).toString();
+
+
+    SupplierActionDialog diag(this, data);
+
+    if(diag.exec() == SupplierActionDialog::Accepted)
+        qDebug() << "Dialog accepted";
 }
 
 SupplierWidget::~SupplierWidget()

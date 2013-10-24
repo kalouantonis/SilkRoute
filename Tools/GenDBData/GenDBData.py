@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from PyQt4.QtSql import *
 from PyQt4.QtCore import QString, QCryptographicHash, QByteArray
 import sys

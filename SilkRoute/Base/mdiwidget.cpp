@@ -2,6 +2,7 @@
 #include "ui_mdiwidget.h"
 
 #include <QDebug>
+#include <Database/dbutils.h>
 
 namespace Base
 {
@@ -17,7 +18,7 @@ MDIWidget::MDIWidget(QWidget *parent, DB::ITableModel* tableModel) :
     attachModel(tableModel);
 
     // Set search validator, so as to avoid SQL Injections
-    ui->txtSearch->setValidator(DB::ITable::GetAlNumValidator(this));
+    ui->txtSearch->setValidator(DB::GetAlNumValidator(this));
 
     // Resize all columns to fit contents
     ui->tableView->resizeColumnsToContents();

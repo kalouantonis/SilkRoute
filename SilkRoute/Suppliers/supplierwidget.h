@@ -24,8 +24,6 @@ public slots:
     void addSupplier();
 
 private slots:
-    // Supplier manipulations
-    void m_manipSupplier();
 
     virtual void m_editAction(const QModelIndex& index);
 

@@ -15,6 +15,7 @@ class SupplierActionDialog : public QDialog
     
 public:
     explicit SupplierActionDialog(QWidget *parent = 0);
+    explicit SupplierActionDialog(QWidget *parent, const SupplierTable::SupplierData& data);
     ~SupplierActionDialog();
 
 
@@ -26,6 +27,9 @@ public:
 
     
 private:
+    // Common function for constructors to call
+    void m_construct();
+
     Ui::SupplierActionDialog *ui;
 };
 

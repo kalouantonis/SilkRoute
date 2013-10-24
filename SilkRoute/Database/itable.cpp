@@ -19,13 +19,11 @@ namespace DB
 
     void ITable::m_ClearQuery()
     {
-        m_qry.clear();
-    }
+        // Instruct query to finish processing
+        m_qry.finish();
 
-    QRegExpValidator* ITable::GetAlNumValidator(QObject* parent)
-    {
-        // Allow alphanum characters and whitespace at the end of expression
-        return new QRegExpValidator(QRegExp("[A-Za-z0-9_]*$+"), parent);
+        // Clear data
+        m_qry.clear();
     }
 
     ITable::~ITable()
