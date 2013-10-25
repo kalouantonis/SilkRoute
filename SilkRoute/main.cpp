@@ -6,8 +6,6 @@
 
 #include <QApplication>
 
-#include <QSplashScreen>
-#include <QPixmap>
 
 // DB data
 // TODO: Use function to parse settins file and locate DB name
@@ -24,14 +22,6 @@ int main(int argc, char** argv)
     // Set parameters for application
     app.setApplicationName(appName);
     app.setApplicationVersion(appVersion);
-
-#ifndef _TESTING
-        // TODO: Make a nice splash screen
-        QPixmap splashImage(":suppliers/Resources/images/supplier-view.png");
-        // Set parent to desktop
-        QSplashScreen splash((QWidget*)app.desktop(), splashImage, Qt::WindowStaysOnTopHint);
-        splash.show();
-#endif
 
     // Create DB connection
     DB::DBConnector database;
@@ -65,7 +55,6 @@ int main(int argc, char** argv)
             app.processEvents();
 
         // Remove splash, show login dialog
-        splash.finish(&loginDiag);
 
         if(loginDiag.exec() == QDialog::Accepted)
         {

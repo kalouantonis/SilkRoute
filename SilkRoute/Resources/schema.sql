@@ -18,4 +18,3 @@ CREATE TABLE IF NOT EXISTS main.suppliers (
   last_transaction INTEGER,
   FOREIGN KEY (last_transaction) REFERENCES transactions(id)
 );
-

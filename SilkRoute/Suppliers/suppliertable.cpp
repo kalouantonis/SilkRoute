@@ -34,40 +34,76 @@ void SupplierTable::Search(const QString &term)
 
 #ifdef _DEBUG
     qDebug() << "Query made: " + this->query().lastQuery() +
-                "\n\tFound " + QString::number(this->rowCount()) + " rows" +
-                "\n\tErrors: " << GetLastError();
+                "\n\tFound: " + QString::number(this->rowCount()) +
+                '\n\tErrors: ' + this->GetLastError();
 #endif
 }
 
 
 bool SupplierTable::Insert(const SupplierData &data)
 {
-    QSqlQuery qry("INSERT INTO suppliers (name, profit, expenditure, last_transaction) VALUES ('" + data.name
+    /*
+    this->setQuery("INSERT INTO suppliers (name, profit, expenditure, last_transaction) VALUES ('" + data.name
                   + "', " + QString::number(data.profit) + ", " + QString::number(data.expenditure)
-                  + ", " + QString::number(data.last_transaction) + ")");
-    //qry.prepare("INSERT INTO suppliers (name, profit, expenditure, last_transaction) VALUES (\":name\", :profit, :expenditure, :last_trans)");
+                  + ", " + QString::number(data.last_transaction) + ")");*/
 
-    //qry.bindValue(":name", data.name);
-    //qry.bindValue(":profit", data.profit);
-    //qry.bindValue(":expenditure", data.expenditure);
-    //qry.bindValue(":last_trans", data.last_transaction);
+    QSqlQuery qry = this->query();
+    qry.prepare("INSERT INTO suppliers (name, profit, expenditure, last_transaction) "
+                "VALUES (:name, :profit, :expenditure, :last_trans)");
+
+    qry.bindValue(":name", data.name);
+    qry.bindValue(":profit", data.profit);
+    qry.bindValue(":expenditure", data.expenditure);
+    qry.bindValue(":last_trans", data.last_transaction);
+
+    this->setQuery(qry);
 
     if(!qry.exec())
     {
 #ifdef _DEBUG
-        qDebug() << "Query failed -- SupplierTable::Insert";
+        qDebug() << "Query failed: " << qry.lastQuery();
         qDebug() << '\t' << qry.lastError();
-        qDebug() << '\t' << qry.lastQuery();
+#endif
+
+        return false;
+    }
+
+#ifdef _DEBUG
+    qDebug() << "SupplierTable::Insert -- Query made: " << qry.lastQuery();
+    qDebug() << "\t" << qry.lastError();
+#endif
+
+    // Send data changed signal, refresh query
+    emit dataChanged();
+
+    return true;
+}
+
+bool SupplierTable::Update(const SupplierData &data)
+{
+    return false;
+}
+
+bool SupplierTable::Remove(int id)
+{
+    QSqlQuery qry = this->query();
+
+    qry.prepare("DELETE FROM suppliers WHERE `id`=:id");
+
+    qry.bindValue(":id", id);
+
+    if(!qry.exec())
+    {
+#ifdef _DEBUG
+        qDebug() << "SupplierTable::Remove -- Query failed: " << qry.lastQuery();
+        qDebug() << '\t' << qry.lastError();
 #endif
         return false;
     }
 
 #ifdef _DEBUG
-    qDebug() << "Query made: " << qry.lastQuery();
+    qDebug() << "Query succeeded: " << qry.lastQuery();
 #endif
-
-    // Send data changed signal, refresh query
-    emit dataChanged();
 
     return true;
 }

@@ -37,6 +37,10 @@ public:
 
     // Will return false if query failed
     bool Insert(const SupplierData& data);
+
+    bool Update(const SupplierData& data);
+
+    bool Remove(int id);
 };
 
 #endif // SUPPLIERTABLE_H

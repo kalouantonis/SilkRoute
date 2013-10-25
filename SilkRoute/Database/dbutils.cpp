@@ -5,8 +5,6 @@
 #include <QFile>
 #include <QTextStream>
 
-#include <cassert>
-
 namespace DB
 {
 
@@ -39,7 +37,13 @@ bool CreateAllTables(const QString& filename)
         if(line.contains(';'))
         {
             // Add statement to qry
-            qry.prepare(tmpData);
+            //qry.prepare(tmpData);
+            if(!qry.exec(tmpData))
+            {
+                qDebug() << qry.lastError();
+
+                return false;
+            }
 
 #ifdef _DEBUG
             // This will slow down execution alot, so only use in debug mode
@@ -53,15 +57,6 @@ bool CreateAllTables(const QString& filename)
 
     // Close open file stream
     schema_file.close();
-
-    // Execute the query
-    if(!qry.exec())
-    {
-        qDebug() << qry.lastError();
-
-        return false;
-    }
-
 
     return true;
 }
