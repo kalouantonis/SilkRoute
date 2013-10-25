@@ -13,6 +13,8 @@ public:
     explicit StockWidget(QWidget *parent = 0);
     ~StockWidget();
 
+    static const QString objectName() { return StockObjectName; }
+
 private:
 };
 

@@ -3,9 +3,6 @@
 
 #include <QCloseEvent>
 
-#include <QDebug>
-#include <cassert>
-
 MainWindow::MainWindow(QWidget *parent, bool admin) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -73,81 +70,58 @@ void MainWindow::m_showPreferences()
     }
 }
 
-QWidget* MainWindow::m_createWidget(const WidgetIDS id)
+template<typename T>
+T* MainWindow::m_createWidget()
 {
-    // TODO: Add return for widget, so that actions can be performed after its creation
+    // Initialize as nothing, just because RAII
+    T* widget = NULL;
 
-    const QString currWidgetName = this->centralWidget()->objectName();
-
-    QWidget* tmpWidget = NULL;
-
-    // Find ID and create appropriate widget
-    switch(id)
+    // Check if current widget is already of this type
+    if(this->centralWidget()->objectName() != T::objectName())
     {
-    case SUPPLIER:
-        if(currWidgetName != SupplierObjectName)
-        {
-            tmpWidget = new SupplierWidget(this);
-
 #ifdef _DEBUG
-            qDebug() << "Creating new supplier widget";
+        qDebug() << "Creating " << T::objectName() << "...";
 #endif
-        }
-        break;
-    case TRANSACTION:
-        break;
-    case STOCK:
-        if(currWidgetName != StockObjectName)
-        {
-            tmpWidget = new StockWidget(this);
 
-#ifdef _DEBUG
-            qDebug() << "Creating new StockWidget";
-#endif
-        }
-        break;
-    default:
-        // Create empty widget so as to avoid segfaults through
-        // NULL pointer dereferencing
-        tmpWidget = new Base::MDIWidget(this);
+        // Allocate new widget of type T
+        widget = new T(this);
 
-#ifdef _DEBUG
-        qDebug() << "MainWindow::m_createWidget -- Invalid ID found, creating generic MDIWidget";
-#endif
+        // Set as central widget
+        this->setCentralWidget(widget);
     }
+    else
+        // Grab central widget, it is desired type, widget is already shown
+        widget = (T*)this->centralWidget();
 
-    // If not found, then revert to current widget
-    if(!tmpWidget)
-        tmpWidget = this->centralWidget();
+    // Check that widget is not NULL, if so, memory errors, get a new PC
+    assert(widget != NULL);
 
-    // Check for null ptr, memory error exists if NULL
-    assert(tmpWidget != NULL);
+    widget->showMaximized();
 
-    // Display new widget
-    tmpWidget->showMaximized();
+    return widget;
 
-    this->setCentralWidget(tmpWidget);
-
-    return tmpWidget;
 }
 
 void MainWindow::m_createSupplierView()
 {
     // Create the supplier widget
-    m_createWidget(SUPPLIER);
+    //m_createWidget(SUPPLIER);
+    m_createWidget<SupplierWidget>();
 }
 
 void MainWindow::m_addSupplierAction()
 {
     // if window is not created, do it, if it is, set to active
-    SupplierWidget* widget = qobject_cast<SupplierWidget*>(m_createWidget(SUPPLIER));
+    //SupplierWidget* widget = qobject_cast<SupplierWidget*>(m_createWidget(SUPPLIER));
+    SupplierWidget* widget = m_createWidget<SupplierWidget>();
 
     widget->addSupplier();
 }
 
 void MainWindow::m_createStockView()
 {
-    m_createWidget(STOCK);
+    //m_createWidget(STOCK);
+    m_createWidget<StockWidget>();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

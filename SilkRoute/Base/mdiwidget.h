@@ -31,6 +31,8 @@ public:
 
     void attachModel(DB::ITableModel* model);
 
+    static const QString objectName() { return MDIObjectName; }
+
 private slots:
     // Used by search text widget to find records
     void m_searchAction();

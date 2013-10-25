@@ -13,6 +13,10 @@
 #include <SilkRoute/Stock/stockwidget.h>
 #include <SilkRoute/Base/mdiwidget.h>
 
+// Debugging
+#include <cassert>
+#include <QDebug>
+
 namespace Ui {
 class MainWindow;
 }
@@ -51,18 +55,9 @@ private:
 
     Ui::MainWindow *ui;
 
-    // used when creating widget
-    enum WidgetIDS
-    {
-        SUPPLIER,
-        TRANSACTION,
-        STOCK
-    };
-
-    // Will add widget to MDI, if it exists, it will check if active
-    // if not, it will activate
-    // Send pointer to pointer, so as the actual address of widget is exploited
-    QWidget* m_createWidget(const WidgetIDS id);
+    // Widget factory using template meta-programming for simplicity/keeping things generic
+    template<typename T>
+    T* m_createWidget();
 
 };
 

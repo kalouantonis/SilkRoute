@@ -20,6 +20,8 @@ public:
     explicit SupplierWidget(QWidget *parent = 0);
     ~SupplierWidget();
 
+    static const QString objectName() { return SupplierObjectName; }
+
 public slots:
     void addSupplier();
 

@@ -44,6 +44,7 @@ SupplierWidget::SupplierWidget(QWidget *parent) :
     // Make connections ==============================================================
 
     // Connect external actions
+
     //this->connect(, this, SLOT(m_manipSupplier()));
 }
 

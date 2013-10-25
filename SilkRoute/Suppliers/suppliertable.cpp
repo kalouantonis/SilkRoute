@@ -35,7 +35,7 @@ void SupplierTable::Search(const QString &term)
 #ifdef _DEBUG
     qDebug() << "Query made: " + this->query().lastQuery() +
                 "\n\tFound: " + QString::number(this->rowCount()) +
-                '\n\tErrors: ' + this->GetLastError();
+                "n\tErrors: " + this->GetLastError();
 #endif
 }
 
