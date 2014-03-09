@@ -1,19 +1,27 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "SilkRoute/Transactions/transactionwidget.h"
+#include <SilkRoute/Types/typeswidget.h>
+#include <SilkRoute/Utils/Logger.h>
+#include <Reports/reportgeneratedialog.h>
+#include <SilkRoute/Reports/reportview.h>
+
 #include <QCloseEvent>
 
-MainWindow::MainWindow(QWidget *parent, bool admin) :
+const QString MainWindow::TAG = "MainWindow";
+
+MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
     // Give user information that the app is ready to be used
-    //ui->statusBar->setStatusTip(tr("Ready..."));
+    ui->statusBar->setStatusTip(tr("Ready..."));
 
     // Hide admin panel... for now
-    ui->groupAdmin->setHidden(!admin);
+    //ui->groupAdmin->setHidden(!admin);
 
     m_createActions();
 }
@@ -46,15 +54,28 @@ void MainWindow::m_createActions()
                   SLOT(m_createSupplierView()));
     this->connect(ui->btnStockView, SIGNAL(clicked()), this,
                   SLOT(m_createStockView()));
+    this->connect(ui->btnTransView, SIGNAL(clicked()), this,
+                  SLOT(m_createTransactionView()));
+    this->connect(ui->btnTypeView, SIGNAL(clicked()), this,
+                  SLOT(m_createTypeView()));
+    this->connect(ui->btnGenReport, SIGNAL(clicked()), this,
+                  SLOT(m_createGenReportView()));
+    this->connect(ui->btnPrintReport, SIGNAL(clicked()), this,
+                  SLOT(m_printReport()));
 
     // Add
     this->connect(ui->btnSupAdd, SIGNAL(clicked()), this, SLOT(m_addSupplierAction()));
+    this->connect(ui->btnStockAdd, SIGNAL(clicked()), this, SLOT(m_addStockAction()));
+    this->connect(ui->btnTransAdd, SIGNAL(clicked()), this, SLOT(m_addTransactionAction()));
+    this->connect(ui->btnTypeAdd, SIGNAL(clicked()), this, SLOT(m_addTypeAction()));
+
+    // Remove
+    this->connect(ui->btnSupRemove, SIGNAL(clicked()), this, SLOT(m_removeSupplierAction()));
+    this->connect(ui->btnTypeRemove, SIGNAL(clicked()), this, SLOT(m_removeTypeAction()));
+    this->connect(ui->btnStockRemove, SIGNAL(clicked()), this, SLOT(m_removeStockAction()));
 }
 
-void MainWindow::m_initToolbar()
-{
 
-}
 
 void MainWindow::m_showPreferences()
 {
@@ -79,9 +100,7 @@ T* MainWindow::m_createWidget()
     // Check if current widget is already of this type
     if(this->centralWidget()->objectName() != T::objectName())
     {
-#ifdef _DEBUG
-        qDebug() << "Creating " << T::objectName() << "...";
-#endif
+        debug(TAG, "Creating " + T::objectName() + "...");
 
         // Allocate new widget of type T
         widget = new T(this);
@@ -90,16 +109,18 @@ T* MainWindow::m_createWidget()
         this->setCentralWidget(widget);
     }
     else
+    {
         // Grab central widget, it is desired type, widget is already shown
         widget = (T*)this->centralWidget();
+    }
 
     // Check that widget is not NULL, if so, memory errors, get a new PC
     assert(widget != NULL);
 
+    // Maximize selected widget
     widget->showMaximized();
 
     return widget;
-
 }
 
 void MainWindow::m_createSupplierView()
@@ -112,10 +133,52 @@ void MainWindow::m_createSupplierView()
 void MainWindow::m_addSupplierAction()
 {
     // if window is not created, do it, if it is, set to active
-    //SupplierWidget* widget = qobject_cast<SupplierWidget*>(m_createWidget(SUPPLIER));
+    // So no worries, we arent allocating a new widget every click of add
     SupplierWidget* widget = m_createWidget<SupplierWidget>();
 
-    widget->addSupplier();
+    widget->add();
+}
+
+void MainWindow::m_addStockAction()
+{
+    StockWidget* widget = m_createWidget<StockWidget>();
+
+    widget->add();
+}
+
+void MainWindow::m_addTransactionAction()
+{
+    TransactionWidget* widget = m_createWidget<TransactionWidget>();
+
+    widget->add();
+}
+
+void MainWindow::m_addTypeAction()
+{
+    TypesWidget* widget = m_createWidget<TypesWidget>();
+
+    widget->add();
+}
+
+void MainWindow::m_removeSupplierAction()
+{
+    SupplierWidget* widget = m_createWidget<SupplierWidget>();
+
+    widget->remove();
+}
+
+void MainWindow::m_removeTypeAction()
+{
+    TypesWidget* widget = m_createWidget<TypesWidget>();
+
+    widget->remove();
+}
+
+void MainWindow::m_removeStockAction()
+{
+    StockWidget* widget = m_createWidget<StockWidget>();
+
+    widget->remove();
 }
 
 void MainWindow::m_createStockView()
@@ -124,12 +187,34 @@ void MainWindow::m_createStockView()
     m_createWidget<StockWidget>();
 }
 
+void MainWindow::m_createTransactionView()
+{
+    m_createWidget<TransactionWidget>();
+}
+
+void MainWindow::m_createTypeView()
+{
+    m_createWidget<TypesWidget>();
+}
+
+void MainWindow::m_createGenReportView()
+{
+    auto reportView = m_createWidget<ReportView>();
+    reportView->add();
+}
+
+void MainWindow::m_printReport()
+{
+    auto reportView = m_createWidget<ReportView>();
+    reportView->generate();
+}
+
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     // Only check when testing mode is not on
 #ifndef _TESTING
     // Create message box, inquire about quiting
-    QMessageBox tempQuitMsg(QMessageBox::Warning, "Quit?",
+        QMessageBox tempQuitMsg(QMessageBox::Warning, "Quit?",
                             "Are you sure you want to quit?",
                             QMessageBox::Yes | QMessageBox::No, this);
 
@@ -139,8 +224,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
         // TODO: Save stuff and close open documents
 #endif
-
-        // Close all subwindows
 
         // Accept event, quit
         event->accept();

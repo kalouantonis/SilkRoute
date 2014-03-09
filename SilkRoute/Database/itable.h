@@ -2,7 +2,7 @@
 #define ITABLE_H
 
 #include <QObject>
-#include <Qt/qstring.h>
+#include <QString>
 #include <QSqlQuery>
 #include <QSqlError>
 
@@ -11,21 +11,24 @@
 
 namespace DB
 {
+    /// Class describing a database table
     class ITable : public QObject
     {
         Q_OBJECT
     public:
+        /// Constructor, declaring a parent class
         explicit ITable(QObject *parent = 0);
+        /// Destructor
         virtual ~ITable();
 
+        /// Get last error from database
         const QString GetLastError();
 
-
     protected:
-        // Clear SQL Query class
+        /// Clear SQL Query class
         void m_ClearQuery();
 
-        // Empty query class
+        /// SQL abstraction class to make queries with
         QSqlQuery m_qry;
 
     };

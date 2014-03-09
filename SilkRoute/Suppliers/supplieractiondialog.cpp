@@ -2,70 +2,88 @@
 #include "ui_supplieractiondialog.h"
 
 #include <Database/dbutils.h>
+#include <QMessageBox>
 
 SupplierActionDialog::SupplierActionDialog(QWidget *parent) :
     QDialog(parent)
 {
-    m_construct();
+    // Call constructor delegate. This is needed as one constructor can not call
+    // another in C++
+    construct();
+    // set dialog window title
+    this->setWindowTitle(tr("Add Supplier..."));
 }
 
-SupplierActionDialog::SupplierActionDialog(QWidget *parent, const SupplierTable::SupplierData &data)
+SupplierActionDialog::SupplierActionDialog(QWidget *parent, const SupplierTable::Data &data)
     : QDialog(parent)
 {
-    m_construct();
+    // Call constructor delegate
+    construct();
 
-    ui->txtName->setText(data.name);
+    // Set dialog window title
+    this->setWindowTitle(tr("Edit Supplier..."));
 
-    // Other input fields are disabled
-    ui->txtProfit->hide();
-    ui->txtExpenditure->hide();
-    // Hide accompanying labels
-    ui->lblProfit->hide();
-    ui->lblExpenditure->hide();
-
-    this->resize(this->width(), this->height() - ui->txtProfit->height() - ui->txtExpenditure->height());
+    // Set dialog data
+    this->setData(data);
 }
 
-void SupplierActionDialog::m_construct()
+void SupplierActionDialog::construct()
 {
+    // Create UI
     ui = new Ui::SupplierActionDialog;
 
-    // Supplier with no constructor args, assuming adding
-    this->setWindowTitle(tr("Add Supplier..."));
-
-    // TODO: Move stuff so that 2 constructors can call items
-
+    // Initialize UI
     ui->setupUi(this);
 
-    // TODO: Use validators
+    // Set the text box validation regex
     ui->txtName->setValidator(DB::GetAlNumValidator(this));
-    ui->txtProfit->setValidator(DB::GetNumericValidator(this));
-    ui->txtExpenditure->setValidator(DB::GetNumericValidator(this));
+    // Connect the ok button to the okBtnPressed method
+    this->connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(okBtnPressed()));
 }
 
-SupplierTable::SupplierData SupplierActionDialog::data() const
+SupplierTable::Data SupplierActionDialog::data() const
 {
-    // Initialize everything as zero
-    SupplierTable::SupplierData data = { 0 };
+    // Initialize data container
+    SupplierTable::Data data;
 
+    // Get name of supplier from text box
     data.name = ui->txtName->text();
 
-    // Either enabled or in-visible
-    if(ui->txtProfit->isEnabled())
-        data.profit = ui->txtProfit->text().toDouble();
-
-    if(ui->txtExpenditure->isEnabled())
-        data.expenditure = ui->txtExpenditure->text().toDouble();
-
+    // Return data container to caller
     return data;
 }
 
-void SupplierActionDialog::setData(const SupplierTable::SupplierData &data)
+void SupplierActionDialog::setData(const SupplierTable::Data &data)
 {
+    // Set name text box to the given value
     ui->txtName->setText(data.name);
+}
+
+void SupplierActionDialog::okBtnPressed()
+{
+    // Get supplier name text
+    QString nameText = ui->txtName->text();
+
+    // Check if the text has values inside of it
+    if(!nameText.isEmpty())
+    {
+        // Send accept message and close dialog
+        this->accept();
+    }
+    else // No supplier name
+    {
+        // Warn the user of invalid data
+        QMessageBox::warning(this, "Invalid data entered.",
+                  "Supplier name must be entered.",
+                    QMessageBox::Ok);
+
+        // Send rejection message
+        this->reject();
+    }
 }
 
 SupplierActionDialog::~SupplierActionDialog()
 {
+    // De-allocate UI from heap memory
     delete ui;
 }

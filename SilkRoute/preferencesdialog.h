@@ -1,7 +1,7 @@
 #ifndef PREFERENCESDIALOG_H
 #define PREFERENCESDIALOG_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 
 namespace Ui {
 class PreferencesDialog;
@@ -15,6 +15,8 @@ public:
     explicit PreferencesDialog(QWidget *parent = 0);
     ~PreferencesDialog();
     
+private slots:
+    void m_browseFileSys();
 private:
     Ui::PreferencesDialog *ui;
 };

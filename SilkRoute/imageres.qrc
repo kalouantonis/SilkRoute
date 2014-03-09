@@ -8,18 +8,23 @@
         <file>Resources/images/doc-saveall.png</file>
         <file>Resources/images/preferences.png</file>
         <file>Resources/images/add.png</file>
-        <file>Resources/images/add2.png</file>
         <file>Resources/images/search.png</file>
+        <file>Resources/images/remove.png</file>
     </qresource>
     <qresource prefix="/stock">
-        <file>Resources/images/stock-add.png</file>
         <file>Resources/images/stock-view.png</file>
-        <file>Resources/images/stock-search.png</file>
     </qresource>
     <qresource prefix="/transactions">
         <file>Resources/images/transactions-view.png</file>
     </qresource>
     <qresource prefix="/database">
         <file>Resources/schema.sql</file>
+    </qresource>
+    <qresource prefix="/reports">
+        <file>Resources/images/reports.png</file>
+        <file>Resources/images/print.png</file>
+    </qresource>
+    <qresource prefix="/types">
+        <file>Resources/images/type-view.png</file>
     </qresource>
 </RCC>

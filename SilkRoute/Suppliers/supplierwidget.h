@@ -17,22 +17,25 @@ class SupplierWidget: public Base::MDIWidget
     Q_OBJECT
     
 public:
+    /// Constructor, sets parent object
     explicit SupplierWidget(QWidget *parent = 0);
+    /// Destructor
     ~SupplierWidget();
 
-    static const QString objectName() { return SupplierObjectName; }
+    /// Get widget object name. Used in mainwindow
+    static const QString& objectName() { return SupplierObjectName; }
 
 public slots:
-    void addSupplier();
+    /// add new supplier
+    virtual void add() final;
 
 private slots:
-
-    virtual void m_editAction(const QModelIndex& index);
+    /// Called on double click event, allows editing of row
+    virtual void m_editAction(const QModelIndex& index) final;
 
 private:
-
-    // Supplier manipulation dialog
-    //SupplierActionDialog* m_supDiag;
+    /// Used for logging
+    const static QString TAG;
 };
 
 #endif // SUPPLIERWIDGET_H

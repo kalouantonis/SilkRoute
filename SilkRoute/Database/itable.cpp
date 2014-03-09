@@ -8,12 +8,13 @@
 namespace DB
 {
     ITable::ITable(QObject *parent) :
-        QObject(parent)
+        QObject(parent) // Parent constructor
     {
     }
 
     const QString ITable::GetLastError()
     {
+        // Get last error from query
         return m_qry.lastError().text();
     }
 
@@ -28,6 +29,6 @@ namespace DB
 
     ITable::~ITable()
     {
-
+        //destructor
     }
 }

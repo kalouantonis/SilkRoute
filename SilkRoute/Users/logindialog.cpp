@@ -5,6 +5,10 @@
 #include <QSqlRecord>
 #include <QSqlResult>
 
+#include <SilkRoute/Utils/Logger.h>
+
+const QString LoginDialog::TAG = "LoginDialog";
+
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent)
   , userTable(parent)
@@ -19,9 +23,6 @@ void LoginDialog::m_Construct()
 
     // Initialize login attempts
     m_loginAttempts = 0;
-
-    // Set admin rights to false
-    m_isAdmin = false;
 
     // Initialize UI
     ui->setupUi(this);
@@ -50,18 +51,14 @@ void LoginDialog::m_Construct()
 
 void LoginDialog::LoginBtnPressed()
 {
-#ifdef _DEBUG
-    qDebug() << "Login button pressed: "
-             << m_loginAttempts + 1
-             << " attempts\n";
-#endif
+    debug(TAG, "Login button pressed: "
+             + QString::number(m_loginAttempts + 1)
+             + " attempts\n");
 
     if(ui->txtUser->text().isEmpty() ||
             ui->txtPass->text().isEmpty())
     {
-#ifdef _DEBUG
-        qDebug() << "No data entered in login fields";
-#endif
+        debug(TAG, "No data entered in login fields");
 
         // No fields were filed in
         QMessageBox::information(this, "Please enter all details",
@@ -79,21 +76,16 @@ void LoginDialog::LoginBtnPressed()
 
         // Critical message, query failed for some reason
         QMessageBox::critical(this, "Database Error",
-                              "There was an error in the database, please consult developer",
+                              "There was an error in the database, please consult the developer",
                               QMessageBox::Ok);
-        qDebug() << userTable.GetLastError();
+        error(TAG, userTable.GetLastError());
 
         // Quit
         this->reject();
     }
     else if(res != RES_NONE)
     {
-#ifdef _DEBUG
-        qDebug() << "Login credentials correct";
-#endif
-
-        if(res == RES_SUPERUSER)
-            m_isAdmin = true;
+        debug(TAG, "Login credentials correct");
 
         // Login credential correct
         this->accept();

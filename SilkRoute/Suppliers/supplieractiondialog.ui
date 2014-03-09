@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>289</width>
-    <height>213</height>
+    <height>99</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,42 +25,6 @@
      </item>
      <item>
       <widget class="QLineEdit" name="txtName"/>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="layoutProfit">
-     <item>
-      <widget class="QLabel" name="lblProfit">
-       <property name="text">
-        <string>Initial Profit:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="txtProfit">
-       <property name="text">
-        <string>0.00</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="layoutExpenditure">
-     <item>
-      <widget class="QLabel" name="lblExpenditure">
-       <property name="text">
-        <string>Initial Expenditure: </string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="txtExpenditure">
-       <property name="text">
-        <string>0.00</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>

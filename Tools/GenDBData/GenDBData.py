@@ -1,109 +1,63 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-from PyQt4.QtSql import *
-from PyQt4.QtCore import QString, QCryptographicHash, QByteArray
 import sys
+from PyQt5.QtCore import QCryptographicHash
+from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlError
 
-class DBConnection:
-    __filename = ""
-
+class DBConnector:
     def __init__(self):
-        # Set driver
-        self.__dbcon = QSqlDatabase.addDatabase("QSQLITE")
-        
+        self.db = QSqlDatabase.addDatabase("QSQLITE")
+
     def connect(self, filename):
-        self.__filename = filename
+        if self.db.isOpen():
+            print("Already connected to database", file=sys.stdout)
 
-        self.__dbcon.setDatabaseName(filename)
-        
-        if not self.__dbcon.open():
-            # Throw exception
-            raise RuntimeError("Could not connect to database: " + str(self.__dbcon.lastError))
+            return False
 
-        print "Connection made successfully"
-        
-    def close(self):
-        self.__dbcon.close()
+        self.db.setDatabaseName(filename)
 
-        print "Connection has closed"
+        if self.db.open() is False:
+            print ("Connection to " + filename + " failed", file=sys.stderr)
 
-    def __enter__(self):
-        return self
+            return False
 
-    def __exit__(self, type, value, traceback):
-        self.close()
+        print ("Connection to " + filename + " succeeded", file=sys.stdout)
 
-class TableManip:
-    __tablename = ""
-
-    def __init__(self, tablename):
-        self.__tablename = tablename
-
-    """
-    Should provide args like this:
-    id="INTEGER", name="TEXT"
-    """
-    """
-    def createTable(**kwargs):
-        query = QSqlQuery()
-
-        queryString = "CREATE TABLE IF NOT EXISTS " + self.__tablename
-
-        for (ident, typename) in zip(kwargs.keys(), kwargs.values()):
-        queryString += key + 
-        """
-
-    def Insert(self, **kwargs):
-        query_string = "INSERT INTO " + self.__tablename 
-        query_keys = "("
-        query_vals = "("
-
-        for index, (key, value) in enumerate(zip(kwargs.keys(), kwargs.values())):
-            query_keys += '`' + key + '`'
-
-            query_vals += self.__checktype(value)
-
-            query_keys += self.__appendcomma(index, len(kwargs))
-            query_vals += self.__appendcomma(index, len(kwargs))
-
-        query_string += query_keys + ") VALUES " + query_vals + ")"
-
-        print "Performing query"
-        print "\n\t" + query_string
-
-        query = QSqlQuery()
-        query.prepare(query_string)
-
-        if not query.exec_():
-            raise RuntimeError("Query failed: " + str(query.lastError().text()))
+        return True
 
 
-    def __checktype(self, value):
-        if (type(value) is str) or (type(value) is unicode) or (type(value) is chr):
-            return "\"" + value + "\""
-
-        return str(value)
-
-    def __appendcomma(self, index, size):
-        if index != (size - 1):
-            return ", "
-
-        return ''
 
 def Encrypt(val):
-    return QString(QCryptographicHash.hash(val, QCryptographicHash.Sha1).toHex())
+    return str((QCryptographicHash.hash(val.encode("latin-1"), QCryptographicHash.Sha1).toHex()))
 
-def GenerateUsers():
-    table = TableManip("users")
 
-    table.Insert(username=Encrypt("antonis"), password=Encrypt("wordpass"), admin=0)
+def CreateUser(username, password):
+    qry = QSqlQuery()
+
+    qry.prepare("""INSERT INTO users (username, password, deleted)
+        VALUES (:username, :password,  0)""")
+
+    qry.bindValue(":username", Encrypt(username))
+    qry.bindValue(":password", Encrypt(password))
+
+    if qry.exec_() is False:
+        print("Query failed in users table\n\t" + qry.lastError().text(), file=sys.stderr)
+
+        return False
+
+    print( "Query to users table succeeded", file=sys.stdout)
+
+    return True
+
 
 if __name__ == '__main__':
-    con = DBConnection()
+    if len(sys.argv) < 4:
+        print("Usage: GenDBData <filename> <username> <password>", file=sys.stderr)
 
-    #Get cmd line args
-    (scriptname, filename) = sys.argv
+    (script, filename, username, password) = sys.argv
 
-    con.connect(filename)
+    db = DBConnector()
+    db.connect(filename)
 
-    GenerateUsers()
+    CreateUser(username, password)
+

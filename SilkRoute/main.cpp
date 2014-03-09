@@ -3,29 +3,46 @@
 #include "Database/dbconnector.h"
 
 #include "Database/dbutils.h"
+#include <SilkRoute/Utils/Logger.h>
 
-#include <QApplication>
+#include <QtWidgets/QApplication>
 
-
-// DB data
-// TODO: Use function to parse settins file and locate DB name
+// Database file name
 const QString dbname = "data.sqlite";
 // Contained in compiled resources
 const QString schema_name = ":database/Resources/schema.sql";
 
+// Application data
 const QString appName = "Silk Route Accounting";
-const QString appVersion = "1.0.2";
+const QString appVersion = "1.1.53";
 
+
+// Program entry point
 int main(int argc, char** argv)
 {
+
+#ifdef _DEBUG
+    // Set level to debug if preprocessor symbol _DEBUG is set by compiler
+    // So, only show debug messages when program is compiled in debug mode
+    setLogLevel(DEBUG);
+#endif
+
     QApplication app(argc, argv);
     // Set parameters for application
     app.setApplicationName(appName);
     app.setApplicationVersion(appVersion);
 
+    QSettings settings("SilkRoute", appName, NULL);
+
+    QString db_location = settings.value("db_location", dbname).toString();
+
     // Create DB connection
     DB::DBConnector database;
-    if(database.connect(dbname) != DB::CON_FAILED)
+
+    int ret = database.connect(db_location);
+
+    // Check if connection to database succeeded
+    if(ret != DB::CON_FAILED)
     {
         // Create all tables if they do not exist
         if(!DB::CreateAllTables(schema_name))
@@ -33,15 +50,14 @@ int main(int argc, char** argv)
             // Failed to create tables, quit
 
             QMessageBox::critical(NULL, "Database Error",
-                                  "Database failed to initialize, please contact the nearest person and complain!",
+                                  "Database failed to initialize, "
+                                  "please consult the user manual.",
                                   QMessageBox::Ok);
 
+            // Return exit failure message to OS
             return EXIT_FAILURE;
         }
 
-
-        // Temp for testing
-        bool admin = false;
 
         // Only allow login when testing PPD is not set
 #ifndef _TESTING
@@ -54,25 +70,29 @@ int main(int argc, char** argv)
         if(app.hasPendingEvents())
             app.processEvents();
 
-        // Remove splash, show login dialog
-
         if(loginDiag.exec() == QDialog::Accepted)
         {
 
-            // If admin property is super user
-            admin = loginDiag.IsAdmin();
-#else
-            admin = true;
 #endif
 
-            MainWindow w(NULL, admin);
+            // Create main window
+            MainWindow w(nullptr);
 
+            // Show main window to user
             w.show();
+            // Execute application
             return app.exec();
 
 #ifndef _TESTING
         }
 #endif
+    }
+    else if(ret == DB::CON_INVALID)
+    {
+        QMessageBox::critical(NULL, "Database corrupted.",
+                              "Database file has been corrupted. "
+                              "To fix see user manual or delete database file.",
+                              QMessageBox::Ok);
     }
     else
     {
@@ -80,10 +100,13 @@ int main(int argc, char** argv)
         // Created in stack, so don't worry about not
         // referencing parent too much
         QMessageBox::critical(NULL, "Database connection failed",
-                              "Connection to the databse has failed, please contact administrator..",
+                              "Connection to the database has failed, please contact administrator..",
                               QMessageBox::Ok);
     }
 
         // Exit program
     app.quit();
+
+    // Return exit failure message to OS
+    return EXIT_FAILURE;
 }
